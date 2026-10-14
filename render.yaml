@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: foi-developments
+    runtime: static
+    branch: main
+    buildCommand: npm ci --include=dev && npm run build:site
+    staticPublishPath: dist
