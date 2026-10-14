@@ -112,7 +112,7 @@ const propertyCollection: Record<string, Property> = {
 };
 
 function propertyHref(slug: string): string {
-  return `${window.location.pathname.includes('/pages/') ? 'property.html' : 'pages/property.html'}?property=${encodeURIComponent(slug)}`;
+  return `/property/${encodeURIComponent(slug)}`;
 }
 
 function openProperty(card: HTMLElement): void {
@@ -148,13 +148,19 @@ function ensureMeta(attribute: 'name' | 'property', key: string, content: string
   meta.content = content;
 }
 
-function canonicalPageUrl(queryKey?: string, queryValue?: string): string | undefined {
+function canonicalPageUrl(cleanPath?: string): string | undefined {
   if (!['http:', 'https:'].includes(window.location.protocol)) return undefined;
   const url = new URL(window.location.href);
   url.hash = '';
   url.search = '';
-  url.pathname = url.pathname.replace(/index\.html$/i, '');
-  if (queryKey && queryValue) url.searchParams.set(queryKey, queryValue);
+  const legacyPathMap: Record<string, string> = {
+    '/index.html': '/',
+    '/pages/about.html': '/about',
+    '/pages/contact.html': '/contact',
+    '/pages/development.html': '/development',
+    '/pages/properties.html': '/properties',
+  };
+  url.pathname = cleanPath ?? legacyPathMap[url.pathname] ?? url.pathname;
   return url.href;
 }
 
@@ -229,9 +235,9 @@ function syncStructuredData(title: string, description: string, canonicalUrl: st
   script.textContent = JSON.stringify(data);
 }
 
-function syncPageMetadata(title: string, description: string, image?: string, queryKey?: string, queryValue?: string): void {
+function syncPageMetadata(title: string, description: string, image?: string, cleanPath?: string): void {
   const shortDescription = shortenDescription(description);
-  const canonicalUrl = canonicalPageUrl(queryKey, queryValue);
+  const canonicalUrl = canonicalPageUrl(cleanPath);
   document.title = title;
   ensureMeta('name', 'description', shortDescription);
   ensureMeta('property', 'og:title', title);
@@ -265,10 +271,11 @@ syncPageMetadata(document.title, initialDescription);
 function renderPropertyDetail(): void {
   const page = document.getElementById('property-page');
   if (!page) return;
-  const slug = new URLSearchParams(window.location.search).get('property') ?? 'ridge-house';
+  const detailSlug = window.location.pathname.match(/^\/property\/([^/]+)\/?$/)?.[1];
+  const slug = new URLSearchParams(window.location.search).get('property') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'ridge-house');
   const property = propertyCollection[slug] ?? propertyCollection['ridge-house'];
   const title = `${property.name} in ${property.location} | FOI Developments`;
-  syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], 'property', slug);
+  syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], `/property/${encodeURIComponent(slug)}`);
   setText('property-name', property.name);
   setText('property-type', property.type);
   setText('property-location', property.location);
@@ -350,15 +357,16 @@ const developmentPhases: Record<string, DevelopmentPhase> = {
 };
 
 function developmentHref(slug: string): string {
-  return `development-detail.html?phase=${encodeURIComponent(slug)}`;
+  return `/development/${encodeURIComponent(slug)}`;
 }
 
 function renderDevelopmentDetail(): void {
   if (!document.getElementById('development-detail-page')) return;
-  const slug = new URLSearchParams(window.location.search).get('phase') ?? 'site-feasibility';
+  const detailSlug = window.location.pathname.match(/^\/development\/([^/]+)\/?$/)?.[1];
+  const slug = new URLSearchParams(window.location.search).get('phase') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'site-feasibility');
   const phase = developmentPhases[slug] ?? developmentPhases['site-feasibility'];
   const title = `${phase.title} | Property Development Services | FOI Developments`;
-  syncPageMetadata(title, phase.lead, phase.image, 'phase', slug);
+  syncPageMetadata(title, phase.lead, phase.image, `/development/${encodeURIComponent(slug)}`);
   setText('development-phase', phase.phase);
   setText('development-title', phase.title);
   setText('development-section-title', phase.sectionTitle);
@@ -427,10 +435,10 @@ document.querySelectorAll<HTMLElement>('.site-footer .footer-main > .footer-link
   section.setAttribute('aria-label', 'Contact FOI Developments');
   section.innerHTML = `
     <p class="footer-card-title">Get in touch</p>
-    <a class="footer-detail" href="pages/contact.html"><span class="footer-detail-icon" aria-hidden="true">⌖</span><span><small>VISIT</small><strong>No. 2, Akabogu Street, Lagos Business School, Ajah, Lagos</strong></span></a>
+    <a class="footer-detail" href="/contact"><span class="footer-detail-icon" aria-hidden="true">⌖</span><span><small>VISIT</small><strong>No. 2, Akabogu Street, Lagos Business School, Ajah, Lagos</strong></span></a>
     <a class="footer-detail" href="tel:+2348138582155"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 813 858 2155</strong></span></a>
     <a class="footer-detail" href="mailto:info@foidevelopments.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidevelopments.com</strong></span></a>
   `;
   const visitLink = section.querySelector<HTMLAnchorElement>('.footer-detail');
-  if (visitLink && window.location.pathname.includes('/pages/')) visitLink.href = 'contact.html';
+  if (visitLink) visitLink.href = '/contact';
 });

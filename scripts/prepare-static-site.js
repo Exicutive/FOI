@@ -3,7 +3,7 @@ const path = require('node:path');
 
 const projectRoot = path.resolve(__dirname, '..');
 const outputDirectory = path.join(projectRoot, 'dist');
-const publicEntries = ['index.html', 'assets', 'pages', 'robots.txt'];
+const publicEntries = ['index.html', 'assets', 'robots.txt'];
 
 fs.rmSync(outputDirectory, { recursive: true, force: true });
 fs.mkdirSync(outputDirectory, { recursive: true });
@@ -11,6 +11,10 @@ fs.mkdirSync(outputDirectory, { recursive: true });
 for (const entry of publicEntries) {
   fs.cpSync(path.join(projectRoot, entry), path.join(outputDirectory, entry), { recursive: true });
 }
+
+const internalPagesDirectory = path.join(outputDirectory, '_internal', 'pages');
+fs.mkdirSync(internalPagesDirectory, { recursive: true });
+fs.cpSync(path.join(projectRoot, 'pages'), internalPagesDirectory, { recursive: true });
 
 const sitemapPath = path.join(projectRoot, 'sitemap.xml');
 if (fs.existsSync(sitemapPath)) {

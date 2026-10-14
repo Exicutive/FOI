@@ -3,3 +3,4 @@ Allow: /
 Disallow: /node_modules/
 Disallow: /src/
 Disallow: /.git/
+Disallow: /_internal/

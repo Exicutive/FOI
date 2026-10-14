@@ -5,3 +5,40 @@ services:
     branch: main
     buildCommand: npm ci --include=dev && npm run build:site
     staticPublishPath: dist
+    routes:
+      - type: redirect
+        source: /pages/about.html
+        destination: /about
+      - type: redirect
+        source: /pages/contact.html
+        destination: /contact
+      - type: redirect
+        source: /pages/development.html
+        destination: /development
+      - type: redirect
+        source: /pages/properties.html
+        destination: /properties
+      - type: rewrite
+        source: /pages/property.html
+        destination: /_internal/pages/property.html
+      - type: rewrite
+        source: /pages/development-detail.html
+        destination: /_internal/pages/development-detail.html
+      - type: rewrite
+        source: /about
+        destination: /_internal/pages/about.html
+      - type: rewrite
+        source: /contact
+        destination: /_internal/pages/contact.html
+      - type: rewrite
+        source: /development
+        destination: /_internal/pages/development.html
+      - type: rewrite
+        source: /properties
+        destination: /_internal/pages/properties.html
+      - type: rewrite
+        source: /property/:slug
+        destination: /_internal/pages/property.html
+      - type: rewrite
+        source: /development/:slug
+        destination: /_internal/pages/development-detail.html

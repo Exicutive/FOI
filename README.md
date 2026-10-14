@@ -28,7 +28,7 @@ Run `npm install` once, then `npm run build` whenever the TypeScript source chan
 
 ## Deploy to Render
 
-The included `render.yaml` configures a Render Static Site. Push it to GitHub, then in Render choose **New + → Blueprint** and connect the `Exicutive/FOI` repository on `main`. Render will run `npm ci --include=dev && npm run build:site` and publish `dist/`.
+The included `render.yaml` configures a Render Static Site with clean routes such as `/about`, `/properties`, `/development`, and `/contact`. Push it to GitHub, then in Render choose **New + → Blueprint** and connect the `Exicutive/FOI` repository on `main`. Render will run `npm ci --include=dev && npm run build:site` and publish `dist/`.
 
 ## Sitemap
 

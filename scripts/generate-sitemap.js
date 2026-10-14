@@ -27,16 +27,16 @@ function readAttributeValues(filePath, attribute) {
 
 const staticPages = [
   '/',
-  '/pages/about.html',
-  '/pages/contact.html',
-  '/pages/development.html',
-  '/pages/properties.html',
+  '/about',
+  '/contact',
+  '/development',
+  '/properties',
 ];
 const propertySlugs = readAttributeValues(path.join('pages', 'properties.html'), 'data-slug');
 const developmentSlugs = readAttributeValues(path.join('pages', 'development.html'), 'data-development');
 const detailPages = [
-  ...propertySlugs.map((slug) => `/pages/property.html?property=${encodeURIComponent(slug)}`),
-  ...developmentSlugs.map((slug) => `/pages/development-detail.html?phase=${encodeURIComponent(slug)}`),
+  ...propertySlugs.map((slug) => `/property/${encodeURIComponent(slug)}`),
+  ...developmentSlugs.map((slug) => `/development/${encodeURIComponent(slug)}`),
 ];
 const urls = [...staticPages, ...detailPages].map((page) => `${origin}${page}`);
 const xmlEscape = (value) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
