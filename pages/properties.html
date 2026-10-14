@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse residential, commercial and land properties from FOI Developments. Filter opportunities by location, property type and price." />
+  <title>Properties for Sale &amp; Lease | FOI Developments</title>
+  <meta property="og:site_name" content="FOI Developments" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Properties for Sale &amp; Lease | FOI Developments" />
+  <meta property="og:description" content="Browse residential, commercial and land properties from FOI Developments." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" />
+  <meta property="og:image:alt" content="Contemporary residential property" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Properties for Sale &amp; Lease | FOI Developments" />
+  <meta name="twitter:description" content="Browse residential, commercial and land properties from FOI Developments." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <div class="page-noise"></div>
+  <header class="site-header" id="top">
+    <div class="shell nav-bar">
+      <a class="logo brand-logo" href="../index.html" aria-label="FOI Developments home"><img src="../assets/images/foi-logo-mark.png" alt="" width="48" height="48" /><span>FOI <small>Developments Ltd · RC No. 9706127</small></span></a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="properties.html" class="active" aria-current="page">Properties</a>
+        <a href="development.html">Development</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="outline-link desktop-cta" href="contact.html">Talk to an advisor <b>↗</b></a>
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+    </div>
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <a href="../index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="properties.html" class="active" aria-current="page">Properties</a>
+      <a href="development.html">Development</a>
+      <a href="contact.html">Contact</a>
+      <a class="mobile-cta" href="contact.html">Talk to an advisor ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="shell page-hero">
+      <p class="kicker"><span></span> THE FOI COLLECTION</p>
+      <h1>Find the place that moves you.</h1>
+      <p class="lead">Explore a considered collection of homes, commercial spaces, and land opportunities.</p>
+    </section>
+
+    <section class="listings-section" id="listings">
+      <div class="shell">
+        <div class="listing-heading">
+          <div>
+            <p class="numbered-label light"><b>01</b> AVAILABLE PROPERTIES</p>
+            <h2>Space for your<br /><em>next chapter.</em></h2>
+          </div>
+          <p>Every opportunity in our collection has been selected for its location, potential, and lasting value.</p>
+        </div>
+        <form class="property-search" id="property-search">
+          <div class="search-intro"><span class="pulse"></span><div><strong>Find your property</strong><small>Search our current opportunities</small></div></div>
+          <label for="search-location">Location<select id="search-location" name="location"><option value="all">Any location</option><option value="katampe">Katampe</option><option value="guzape">Guzape</option><option value="wuse">Wuse II</option><option value="lifecamp">Life Camp</option><option value="jabi">Jabi</option></select></label>
+          <label for="search-type">Property type<select id="search-type" name="type"><option value="all">Any type</option><option value="residential">Residential</option><option value="commercial">Commercial</option><option value="land">Land</option></select></label>
+          <label for="search-budget">Price range<select id="search-budget" name="budget"><option value="all">Any budget</option><option value="under-300">Up to ₦300M</option><option value="300-700">₦300M – ₦700M</option><option value="700-plus">₦700M+</option></select></label>
+          <button class="search-button" type="submit">View matches <b>↗</b></button>
+          <p class="search-summary" id="search-summary" aria-live="polite">Explore selected opportunities</p>
+        </form>
+        <div class="filters" role="tablist" aria-label="Filter properties">
+          <button class="filter active" data-filter="all">All opportunities <span>06</span></button>
+          <button class="filter" data-filter="residential">Residential</button>
+          <button class="filter" data-filter="commercial">Commercial</button>
+          <button class="filter" data-filter="land">Land</button>
+        </div>
+        <div class="property-grid">
+          <article class="property-card featured-card" data-kind="residential" data-location="katampe" data-budget="700-plus" data-slug="ridge-house" tabindex="0" role="link" aria-label="View Ridge House details"><div class="property-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85" alt="Modern Ridge House exterior" /><span class="status">Featured</span><button class="save-button" aria-label="Save Ridge House">♡</button></div><div class="property-details"><div><p>HOUSE · KATAMPE</p><h3>Ridge House</h3><span>5 beds &nbsp;·&nbsp; 6 baths &nbsp;·&nbsp; 740 sqm</span></div><strong>₦850M</strong></div></article>
+          <article class="property-card" data-kind="residential" data-location="lifecamp" data-budget="under-300" data-slug="meridian-residence" tabindex="0" role="link" aria-label="View Meridian Residence details"><div class="property-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=85" alt="Bright apartment interior" /><button class="save-button" aria-label="Save Meridian Residence">♡</button></div><div class="property-details"><div><p>APARTMENT · LIFE CAMP</p><h3>Meridian Residence</h3><span>3 beds &nbsp;·&nbsp; 3 baths &nbsp;·&nbsp; 210 sqm</span></div><strong>₦265M</strong></div></article>
+          <article class="property-card" data-kind="commercial" data-location="wuse" data-budget="700-plus" data-slug="the-atrium" tabindex="0" role="link" aria-label="View The Atrium details"><div class="property-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85" alt="Modern commercial tower" /><span class="status dark-status">Available to lease</span><button class="save-button" aria-label="Save The Atrium">♡</button></div><div class="property-details"><div><p>COMMERCIAL · WUSE II</p><h3>The Atrium</h3><span>Grade A office &nbsp;·&nbsp; 1,200 sqm</span></div><strong>On request</strong></div></article>
+          <article class="property-card" data-kind="land" data-location="guzape" data-budget="under-300" data-slug="vista-terraces" tabindex="0" role="link" aria-label="View Vista Terraces details"><div class="property-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85" alt="Open land near Guzape" /><button class="save-button" aria-label="Save Vista Terraces">♡</button></div><div class="property-details"><div><p>LAND · GUZAPE</p><h3>Vista Terraces</h3><span>Residential land &nbsp;·&nbsp; 1,850 sqm</span></div><strong>₦190M</strong></div></article>
+          <article class="property-card" data-kind="residential" data-location="jabi" data-budget="300-700" data-slug="aster-court" tabindex="0" role="link" aria-label="View Aster Court details"><div class="property-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=85" alt="Elegant living room at Aster Court" /><button class="save-button" aria-label="Save Aster Court">♡</button></div><div class="property-details"><div><p>TOWNHOUSE · JABI</p><h3>Aster Court</h3><span>4 beds &nbsp;·&nbsp; 4 baths &nbsp;·&nbsp; 340 sqm</span></div><strong>₦430M</strong></div></article>
+          <article class="property-card" data-kind="commercial" data-location="wuse" data-budget="300-700" data-slug="one-central" tabindex="0" role="link" aria-label="View One Central details"><div class="property-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85" alt="Sophisticated office interior" /><button class="save-button" aria-label="Save One Central">♡</button></div><div class="property-details"><div><p>COMMERCIAL · CENTRAL AREA</p><h3>One Central</h3><span>Retail & office &nbsp;·&nbsp; 680 sqm</span></div><strong>On request</strong></div></article>
+        </div>
+        <p class="empty-state" hidden>No listings in this collection yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="shell footer-main"><div class="footer-brand"><a class="footer-logo" href="../index.html">FOI<span>DEVELOPMENTS</span></a><p>Intelligent property decisions, considered from every angle.</p><a class="footer-contact-link" href="mailto:info@foidevelopments.com">info@foidevelopments.com <b>↗</b></a></div><div class="footer-links"><p>EXPLORE</p><a href="../index.html">Home</a><a href="properties.html">Properties</a><a href="development.html">Development</a><a href="about.html">About FOI</a></div><div class="footer-links"><p>CONTACT</p><a href="contact.html">Make an enquiry</a><a href="tel:+2348138582155">+234 813 858 2155</a><span>No. 2, Akabogu Street<br />Lagos Business School, Ajah, Lagos</span></div><a class="footer-top" href="#top" aria-label="Back to top">↑<small>TOP</small></a></div><div class="shell footer-bottom"><p>© 2026 FOI DEVELOPMENTS LTD · RC NO. 9706127</p><p>REAL ESTATE · INVESTMENT · DEVELOPMENT</p></div></footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
