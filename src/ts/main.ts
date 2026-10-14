@@ -188,8 +188,8 @@ function syncStructuredData(title: string, description: string, canonicalUrl: st
     name: 'FOI Developments',
     legalName: 'FOI Developments Ltd',
     url: `${origin}/`,
-    email: 'info@foidevelopments.com',
-    telephone: '+234 813 858 2155',
+    email: 'info@foidev.com',
+    telephone: ['+234 813 858 2155', '+234 707 621 2073'],
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'No. 2, Akabogu Street, Lagos Business School',
@@ -437,7 +437,8 @@ document.querySelectorAll<HTMLElement>('.site-footer .footer-main > .footer-link
     <p class="footer-card-title">Get in touch</p>
     <a class="footer-detail" href="/contact"><span class="footer-detail-icon" aria-hidden="true">⌖</span><span><small>VISIT</small><strong>No. 2, Akabogu Street, Lagos Business School, Ajah, Lagos</strong></span></a>
     <a class="footer-detail" href="tel:+2348138582155"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 813 858 2155</strong></span></a>
-    <a class="footer-detail" href="mailto:info@foidevelopments.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidevelopments.com</strong></span></a>
+    <a class="footer-detail" href="tel:+2347076212073"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 707 621 2073</strong></span></a>
+    <a class="footer-detail" href="mailto:info@foidev.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidev.com</strong></span></a>
   `;
   const visitLink = section.querySelector<HTMLAnchorElement>('.footer-detail');
   if (visitLink) visitLink.href = '/contact';

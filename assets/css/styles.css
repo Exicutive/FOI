@@ -6,6 +6,7 @@
   --blue: #0d5bd1;
   --blue-strong: #0b3f9d;
   --blue-soft: #dfeafc;
+  --header-gold: #8a5a00;
   --muted: #5d718d;
   --line: rgba(12, 33, 71, 0.12);
   --shadow: rgba(9, 28, 67, 0.14);
@@ -72,7 +73,7 @@ textarea {
   inset: 0 0 auto;
   width: 100%;
   z-index: 30;
-  background: rgba(8, 29, 64, 0.92);
+  background: var(--header-gold);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -1184,7 +1185,7 @@ textarea {
     max-height: 0;
     overflow: hidden;
     padding: 0 max(32px, calc((100vw - 1240px) / 2));
-    background: rgba(8, 29, 64, 0.98);
+    background: var(--header-gold);
     transition: max-height 0.28s ease, padding 0.28s ease;
   }
 
