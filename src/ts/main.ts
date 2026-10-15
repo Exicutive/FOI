@@ -74,7 +74,7 @@ const propertyCollection: Record<string, Property> = {
     description: 'Set on an elevated, quiet street in Katampe, Ridge House brings together generous family living and clean contemporary architecture. Floor-to-ceiling glazing draws natural light into its social spaces, while the landscaped grounds create an easy sense of privacy in an established residential enclave.',
     amenities: ['Private swimming pool', 'Fully fitted kitchen', 'Staff quarters', 'Smart-home readiness', '24-hour security', 'Covered parking'],
     summary: [['Type', 'Detached house'], ['Status', 'For sale'], ['Bedrooms', '5'], ['Bathrooms', '6'], ['Internal area', '740 sqm'], ['Location', 'Katampe']],
-    images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1000&q=85']
+    images: ['../assets/images/ridge-house-1.jpg', '../assets/images/ridge-house-2.jpg', '../assets/images/ridge-house-3.jpg']
   },
   'meridian-residence': {
     name: 'Meridian Residence', type: 'Apartment · Life Camp', location: 'Life Camp', price: '₦265M', status: 'Available now', facts: ['3 bedrooms', '3 bathrooms', '210 sqm'],
