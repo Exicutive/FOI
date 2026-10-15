@@ -218,7 +218,7 @@ textarea {
   background:
     radial-gradient(circle at 16% 16%, rgba(146, 191, 255, 0.22), transparent 24%),
     radial-gradient(circle at 90% 8%, rgba(149, 194, 255, 0.18), transparent 26%),
-    linear-gradient(180deg, #07172f 0%, #0a1d3b 28%, #091c39 100%);
+    linear-gradient(180deg, #174579 0%, #123965 28%, #0c2a50 100%);
   color: var(--white);
 }
 
