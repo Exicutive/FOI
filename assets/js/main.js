@@ -4,20 +4,7 @@ const cards = document.querySelectorAll('.property-card');
 const emptyState = document.querySelector('.empty-state');
 const propertySearch = document.querySelector('#property-search');
 const searchSummary = document.querySelector('#search-summary');
-const mapShell = document.querySelector('[data-map-embed]');
-const loadMapButton = mapShell?.querySelector('[data-load-map]');
-loadMapButton?.addEventListener('click', () => {
-    const map = document.createElement('iframe');
-    map.className = 'map-embed';
-    map.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.3849313789724!2d3.6009813745294896!3d6.472829393518931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf73e807b9625%3A0x196ba6c7ae623509!2sLagos%20Business%20School!5e0!3m2!1sen!2sng!4v1791936416977!5m2!1sen!2sng';
-    map.title = 'Map to FOI Developments at Lagos Business School, Ajah, Lagos';
-    map.width = '600';
-    map.height = '450';
-    map.allowFullscreen = true;
-    map.loading = 'eager';
-    map.referrerPolicy = 'strict-origin-when-cross-origin';
-    mapShell?.replaceChildren(map);
-});
+const siteOrigin = 'https://www.foidevs.com';
 function setVisibleProperties(matches) {
     let visible = 0;
     cards.forEach((card) => {
@@ -144,11 +131,7 @@ function ensureMeta(attribute, key, content) {
     meta.content = content;
 }
 function canonicalPageUrl(cleanPath) {
-    if (!['http:', 'https:'].includes(window.location.protocol))
-        return undefined;
     const url = new URL(window.location.href);
-    url.hash = '';
-    url.search = '';
     const legacyPathMap = {
         '/index.html': '/',
         '/pages/about.html': '/about',
@@ -156,8 +139,8 @@ function canonicalPageUrl(cleanPath) {
         '/pages/development.html': '/development',
         '/pages/properties.html': '/properties',
     };
-    url.pathname = cleanPath ?? legacyPathMap[url.pathname] ?? url.pathname;
-    return url.href;
+    const path = cleanPath ?? legacyPathMap[url.pathname] ?? url.pathname;
+    return new URL(path, siteOrigin).href;
 }
 function shortenDescription(description) {
     const normalized = description.replace(/\s+/g, ' ').trim();
@@ -176,15 +159,14 @@ function pageSchemaType() {
     return 'WebPage';
 }
 function syncStructuredData(title, description, canonicalUrl) {
-    const origin = window.location.origin;
-    const agentId = `${origin}/#real-estate-agent`;
-    const websiteId = `${origin}/#website`;
+    const agentId = `${siteOrigin}/#real-estate-agent`;
+    const websiteId = `${siteOrigin}/#website`;
     const business = {
         '@type': 'RealEstateAgent',
         '@id': agentId,
         name: 'FOI Developments',
         legalName: 'FOI Developments Ltd',
-        url: `${origin}/`,
+        url: `${siteOrigin}/`,
         email: 'info@foidev.com',
         telephone: ['+234 813 858 2155', '+234 707 621 2073'],
         address: {
@@ -218,7 +200,7 @@ function syncStructuredData(title, description, canonicalUrl) {
         '@context': 'https://schema.org',
         '@graph': [
             business,
-            { '@type': 'WebSite', '@id': websiteId, url: `${origin}/`, name: 'FOI Developments', publisher: { '@id': agentId } },
+            { '@type': 'WebSite', '@id': websiteId, url: `${siteOrigin}/`, name: 'FOI Developments', publisher: { '@id': agentId } },
             { '@type': pageSchemaType(), '@id': `${canonicalUrl}#webpage`, url: canonicalUrl, name: title, description, isPartOf: { '@id': websiteId }, about: { '@id': agentId } },
         ],
     };

@@ -1,11 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const siteUrl = process.env.SITE_URL;
-if (!siteUrl) {
-  console.error('Set SITE_URL to the deployed site origin before generating the sitemap.');
-  process.exit(1);
-}
+const siteUrl = process.env.SITE_URL || 'https://www.foidevs.com';
 
 let origin;
 try {

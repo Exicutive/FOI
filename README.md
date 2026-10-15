@@ -32,4 +32,4 @@ The included `render.yaml` configures a Render Static Site with clean routes suc
 
 ## Sitemap
 
-After deployment, generate `sitemap.xml` with the production origin. In PowerShell, run `$env:SITE_URL="https://your-domain.example"; npm run sitemap`. The generator also adds the sitemap URL to `robots.txt` and discovers property and development detail URLs from their listing cards.
+Generate `sitemap.xml` with `npm run sitemap`; the production origin defaults to `https://www.foidevs.com`. To use a different origin, set `$env:SITE_URL` before running the command. The generator also adds the sitemap URL to `robots.txt` and discovers property and development detail URLs from their listing cards.
