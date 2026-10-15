@@ -4,6 +4,20 @@ const cards = document.querySelectorAll('.property-card');
 const emptyState = document.querySelector('.empty-state');
 const propertySearch = document.querySelector('#property-search');
 const searchSummary = document.querySelector('#search-summary');
+const mapShell = document.querySelector('[data-map-embed]');
+const loadMapButton = mapShell?.querySelector('[data-load-map]');
+loadMapButton?.addEventListener('click', () => {
+    const map = document.createElement('iframe');
+    map.className = 'map-embed';
+    map.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.3849313789724!2d3.6009813745294896!3d6.472829393518931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf73e807b9625%3A0x196ba6c7ae623509!2sLagos%20Business%20School!5e0!3m2!1sen!2sng!4v1791936416977!5m2!1sen!2sng';
+    map.title = 'Map to FOI Developments at Lagos Business School, Ajah, Lagos';
+    map.width = '600';
+    map.height = '450';
+    map.allowFullscreen = true;
+    map.loading = 'eager';
+    map.referrerPolicy = 'strict-origin-when-cross-origin';
+    mapShell?.replaceChildren(map);
+});
 function setVisibleProperties(matches) {
     let visible = 0;
     cards.forEach((card) => {
@@ -415,7 +429,7 @@ document.querySelectorAll('.site-footer .footer-main > .footer-links:last-of-typ
     <a class="footer-detail" href="/contact"><span class="footer-detail-icon" aria-hidden="true">⌖</span><span><small>VISIT</small><strong>No. 2, Akabogu Street, Lagos Business School, Ajah, Lagos</strong></span></a>
     <a class="footer-detail" href="tel:+2348138582155"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 813 858 2155</strong></span></a>
     <a class="footer-detail" href="tel:+2347076212073"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 707 621 2073</strong></span></a>
-    <a class="footer-detail" href="mailto:info@foidevelopments.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidevelopments.com</strong></span></a>
+    <a class="footer-detail" href="mailto:info@foidev.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidev.com</strong></span></a>
   `;
     const visitLink = section.querySelector('.footer-detail');
     if (visitLink)

@@ -4,6 +4,21 @@ const emptyState = document.querySelector<HTMLElement>('.empty-state');
 const propertySearch = document.querySelector<HTMLFormElement>('#property-search');
 const searchSummary = document.querySelector<HTMLElement>('#search-summary');
 
+const mapShell = document.querySelector<HTMLElement>('[data-map-embed]');
+const loadMapButton = mapShell?.querySelector<HTMLButtonElement>('[data-load-map]');
+loadMapButton?.addEventListener('click', () => {
+  const map = document.createElement('iframe');
+  map.className = 'map-embed';
+  map.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.3849313789724!2d3.6009813745294896!3d6.472829393518931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf73e807b9625%3A0x196ba6c7ae623509!2sLagos%20Business%20School!5e0!3m2!1sen!2sng!4v1791936416977!5m2!1sen!2sng';
+  map.title = 'Map to FOI Developments at Lagos Business School, Ajah, Lagos';
+  map.width = '600';
+  map.height = '450';
+  map.allowFullscreen = true;
+  map.loading = 'eager';
+  map.referrerPolicy = 'strict-origin-when-cross-origin';
+  mapShell?.replaceChildren(map);
+});
+
 function setVisibleProperties(matches: (card: HTMLElement) => boolean): number {
   let visible = 0;
   cards.forEach((card) => {
