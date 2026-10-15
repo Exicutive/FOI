@@ -120,7 +120,6 @@ textarea {
   padding: 3px;
   object-fit: cover;
   border-radius: 4px;
-  background: #e7ebf2;
 }
 
 .brand-logo > span {
@@ -1087,7 +1086,7 @@ textarea {
 
 .footer-brand { max-width: 375px; }
 .footer-logo { display: inline-flex; align-items: baseline; gap: 9px; color: #fff; font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 800; letter-spacing: -.09em; text-decoration: none; }
-.footer-logo::before { content: ''; width: 52px; height: 52px; flex: 0 0 52px; margin-right: 2px; border-radius: 5px; background: #e7ebf2 url('../images/foi-logo-mark.png') center / cover no-repeat; box-shadow: 0 8px 18px rgba(0,0,0,.2); }
+.footer-logo::before { content: ''; width: 52px; height: 52px; flex: 0 0 52px; margin-right: 2px; border-radius: 5px; background: url('../images/foi-logo-mark.png') center / cover no-repeat; }
 .footer-logo span { color: #a9ccff; font: 800 9px var(--mono); letter-spacing: .13em; }
 .footer-brand > p { margin: 10px 0; color: rgba(229,239,255,.73); font-size: .95rem; line-height: 1.65; }
 .footer-contact-link { display: inline-flex; gap: 8px; padding-bottom: 7px; border-bottom: 1px solid rgba(184,215,255,.45); color: #fff; font: 700 10px var(--mono); letter-spacing: .07em; text-decoration: none; }
