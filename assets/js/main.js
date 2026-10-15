@@ -51,13 +51,13 @@ document.querySelectorAll('.save-button').forEach((button) => {
     });
 });
 const propertyCollection = {
-    'ridge-house': {
-        name: 'Ridge House', type: 'House · Katampe', location: 'Katampe', price: '₦850M', status: 'Featured opportunity',
+    'tmlse': {
+        name: 'The Marbella Luxury & Smart Estate', type: 'House · Katampe', location: 'Katampe', price: '₦850M', status: 'Featured opportunity',
         facts: ['5 bedrooms', '6 bathrooms', '740 sqm'],
-        description: 'Set on an elevated, quiet street in Katampe, Ridge House brings together generous family living and clean contemporary architecture. Floor-to-ceiling glazing draws natural light into its social spaces, while the landscaped grounds create an easy sense of privacy in an established residential enclave.',
-        amenities: ['Private swimming pool', 'Fully fitted kitchen', 'Staff quarters', 'Smart-home readiness', '24-hour security', 'Covered parking'],
+        description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
+        amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
         summary: [['Type', 'Detached house'], ['Status', 'For sale'], ['Bedrooms', '5'], ['Bathrooms', '6'], ['Internal area', '740 sqm'], ['Location', 'Katampe']],
-        images: ['../assets/images/ridge-house-1.jpg', '../assets/images/ridge-house-2.jpg', '../assets/images/ridge-house-3.jpg']
+        images: ['../assets/images/tmlse-1.jpg', '../assets/images/tmlse-2.jpg', '../assets/images/tmlse-3.jpg']
     },
     'meridian-residence': {
         name: 'Meridian Residence', type: 'Apartment · Life Camp', location: 'Life Camp', price: '₦265M', status: 'Available now', facts: ['3 bedrooms', '3 bathrooms', '210 sqm'],
@@ -249,8 +249,8 @@ function renderPropertyDetail() {
     if (!page)
         return;
     const detailSlug = window.location.pathname.match(/^\/property\/([^/]+)\/?$/)?.[1];
-    const slug = new URLSearchParams(window.location.search).get('property') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'ridge-house');
-    const property = propertyCollection[slug] ?? propertyCollection['ridge-house'];
+    const slug = new URLSearchParams(window.location.search).get('property') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'tmlse');
+    const property = propertyCollection[slug] ?? propertyCollection['tmlse'];
     const title = `${property.name} in ${property.location} | FOI Developments`;
     syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], `/property/${encodeURIComponent(slug)}`);
     setText('property-name', property.name);
