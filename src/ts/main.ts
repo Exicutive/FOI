@@ -70,7 +70,7 @@ type Property = {
 
 const propertyCollection: Record<string, Property> = {
   'tmlse': {
-    name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'Starting from ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'AVAILABLE NOW',
+    name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'From ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'AVAILABLE NOW',
     facts: ['Home', 'For Sale'],
     description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
     amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
@@ -78,7 +78,7 @@ const propertyCollection: Record<string, Property> = {
     images: ['../assets/images/tmlse-1.jpg', '../assets/images/tmlse-2.jpg', '../assets/images/tmlse-3.jpg']
   },
   'tfgse': {
-    name: 'The Fairmont Green & Smart Estate', type: 'Land', location: 'Ibeju-Lekki, Lagos', price: 'Starting from ₦18M', priceOptions: [['300 sqm', '₦18,000,000'], ['500 sqm', '₦30,000,000']], status: 'AVAILABLE NOW', facts: ['Home', 'For Sale', 'C of O'],
+    name: 'The Fairmont Green & Smart Estate', type: 'Land', location: 'Ibeju-Lekki, Lagos', price: 'From ₦18M', priceOptions: [['300 sqm', '₦18,000,000'], ['500 sqm', '₦30,000,000']], status: 'AVAILABLE NOW', facts: ['Home', 'For Sale', 'C of O'],
     description: 'The estate is eco-friendly which is strategically located along the Lekki-Epe Expressway, opposite the proposed Lagos International Airport, the estate is surrounded by major economic and industrial developments, including Lekki Free Trade Zone, Lekki Deep Sea Port, Dangote Refinery and Petrochemicals, Pan-Atlantic University, Coscharis Group, and Alaro City.',
     amenities: ['EV charging port', 'Electricity', 'Solar Powered', 'Renewable Energy', 'Recreational centre', 'Motorable & Accessible Roads', 'Safe and Secured', 'Green Area'],
     summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
@@ -91,7 +91,7 @@ const propertyCollection: Record<string, Property> = {
     images: ['../assets/images/mbe-1.webp', '../assets/images/mbe-2.webp']
   },
   'qpe': {
-    name: 'Queens Park 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'Starting from ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
+    name: 'Queens Park 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'From ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
     description: 'A rare residential land opportunity in fast-maturing Guzape. Queens Park 2 offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
     amenities: ['Electricity', 'Recreational centre', 'Estate Gate House', 'Perimeter Fencing', 'Green Area', 'Motorable & Accessible'],
     summary: [['Type', 'Land'], ['Status', 'For sale'], ['Land area', '600 sqm']], 
