@@ -72,12 +72,12 @@ const propertyCollection = {
         amenities: ['Green Area', 'Electricity', 'Safe and Secured', 'Motorable & Accessible Roads', 'Swimming pool', 'Water Treatment Plant'],
         images: ['../assets/images/mbe-1.webp', '../assets/images/mbe-2.webp']
     },
-    'vista-terraces': {
-        name: 'Vista Terraces', type: 'Land', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],
-        description: 'A rare residential land opportunity in fast-maturing Guzape. Vista Terraces offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
-        amenities: ['Paved road access', 'Electricity connection', 'Drainage provision', 'Developing neighbourhood', 'Survey documentation', 'Secure vicinity'],
-        summary: [['Type', 'Residential land'], ['Status', 'For sale'], ['Land area', '1,850 sqm'], ['Title', 'Available on request'], ['Access', 'Paved road'], ['Location', 'Guzape']],
-        images: ['https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85']
+    'qpe': {
+        name: 'Queens Park 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'Starting from ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
+        description: 'A rare residential land opportunity in fast-maturing Guzape. Queens Park 2 offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
+        amenities: ['Electricity', 'Recreational centre', 'Estate Gate House', 'Perimeter Fencing', 'Green Area', 'Motorable & Accessible'],
+        summary: [['Type', 'Land'], ['Status', 'For sale'], ['Land area', '600 sqm']], 
+        images: ['../assets/images/qpe-1.JPG', '../assets/images/qpe-2.jpg', '../assets/images/qpe-3.JPG']
     },
     'aster-court': {
         name: 'Aster Court', type: 'Townhouse', location: 'Jabi', price: '₦430M', status: 'Available now', facts: ['4 bedrooms', '4 bathrooms', '340 sqm'],
