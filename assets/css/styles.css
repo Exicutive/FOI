@@ -713,16 +713,13 @@ textarea {
   grid-auto-columns: calc((100% - 48px) / 3);
   grid-auto-flow: column;
   gap: 24px;
-  overflow-x: auto;
+  overflow-x: hidden;
   padding: 2px 2px 18px;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(12, 33, 71, 0.3) transparent;
+  touch-action: pan-y;
 }
 
-.latest-products-track::-webkit-scrollbar { height: 6px; }
-.latest-products-track::-webkit-scrollbar-thumb { border-radius: 999px; background: rgba(12, 33, 71, 0.28); }
 
 .latest-product-card {
   display: block;
@@ -798,7 +795,6 @@ textarea {
 }
 
 .latest-product-copy strong b { color: var(--blue); }
-.latest-products-link { margin-top: 28px; }
 
 .listings-section {
   padding: 120px 0 130px;
