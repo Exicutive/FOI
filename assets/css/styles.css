@@ -919,14 +919,14 @@ textarea {
   white-space: nowrap;
 }
 
-/* Keep longer featured-property names and their starting prices clear at every card width. */
-.featured-card .property-details {
+/* Keep longer property names and their starting prices clear at every card width. */
+.price-from-card .property-details {
   align-items: stretch;
   flex-direction: column;
   gap: 18px;
 }
 
-.featured-card .property-details strong {
+.price-from-card .property-details strong {
   align-self: flex-start;
   width: 100%;
   padding-top: 16px;
