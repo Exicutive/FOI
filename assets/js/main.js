@@ -53,7 +53,7 @@ document.querySelectorAll('.save-button').forEach((button) => {
 const propertyCollection = {
     'tmlse': {
         name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'Starting from ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'AVAILABLE NOW',
-        facts: ['Home', 'For Sale'],
+        facts: ['Home', 'For Sale', 'C of O'],
         description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
         amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
         summary: [['Type', 'Estate land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '1,000 sqm commercial'], ['Price', 'From ₦86.5M'], ['Location', 'Lekki-Epe Expressway']],
@@ -66,12 +66,11 @@ const propertyCollection = {
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
         images: ['../assets/images/tfgse-1.JPG', '../assets/images/tfgse-2.JPG', '../assets/images/tfgse-3.jpg']
     },
-    'the-atrium': {
-        name: 'The Atrium', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
-        description: 'The Atrium offers a refined workplace in the commercial heart of Wuse II. Designed for businesses that value presence and performance, its flexible floor plate, polished arrival experience, and professional building services make it a compelling headquarters address.',
-        amenities: ['High-speed elevators', 'Reception lobby', 'Backup generation', 'Secure access control', 'Ample parking', 'On-site facility management'],
-        summary: [['Type', 'Grade A office'], ['Status', 'To lease'], ['Area', '1,200 sqm'], ['Parking', 'Available'], ['Power', 'Backup generation'], ['Location', 'Wuse II']],
-        images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85']
+    'mbe': {
+        name: 'Meridian Boulevard Estate', type: 'Land', location: 'Okun-Ajah, Ogombo, Lagos', price: 'SALES CLOSED', status: 'Sold', facts: ['Home', 'Sold', 'C of O'],
+        description: 'Meridian Boulevard Estate, located in Okun-Ajah, Ogombo, Lagos, is now fully sold out. Situated within Lagos’s rapidly developing premium real estate corridor, the estate offered early investors an opportunity to benefit from the area’s growth.',
+        amenities: ['Green Area', 'Electricity', 'Safe and Secured', 'Motorable & Accessible Roads', 'Swimming pool', 'Water Treatment Plant'],
+        images: ['../assets/images/mbe-1.webph', '../assets/images/mbe-2.webph', '../assets/images/mbe-3.webph']
     },
     'vista-terraces': {
         name: 'Vista Terraces', type: 'Land', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],

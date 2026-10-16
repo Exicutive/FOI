@@ -84,9 +84,9 @@ const propertyCollection: Record<string, Property> = {
     summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
     images: ['../assets/images/tfgse-1.JPG', '../assets/images/tfgse-2.JPG', '../assets/images/tfgse-3.jpg']
   },
-  'the-atrium': {
-    name: 'The Atrium', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
-    description: 'The Atrium offers a refined workplace in the commercial heart of Wuse II. Designed for businesses that value presence and performance, its flexible floor plate, polished arrival experience, and professional building services make it a compelling headquarters address.',
+  'mbe': {
+    name: 'Meridian Boulevard Estate', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
+    description: 'Meridian Boulevard Estate offers a refined workplace in the commercial heart of Wuse II. Designed for businesses that value presence and performance, its flexible floor plate, polished arrival experience, and professional building services make it a compelling headquarters address.',
     amenities: ['High-speed elevators', 'Reception lobby', 'Backup generation', 'Secure access control', 'Ample parking', 'On-site facility management'],
     summary: [['Type', 'Grade A office'], ['Status', 'To lease'], ['Area', '1,200 sqm'], ['Parking', 'Available'], ['Power', 'Backup generation'], ['Location', 'Wuse II']],
     images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85']
