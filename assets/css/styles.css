@@ -919,6 +919,21 @@ textarea {
   white-space: nowrap;
 }
 
+/* Keep longer featured-property names and their starting prices clear at every card width. */
+.featured-card .property-details {
+  align-items: stretch;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.featured-card .property-details strong {
+  align-self: flex-start;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.14);
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+}
+
 .empty-state {
   margin-top: 28px;
   color: rgba(219, 232, 255, 0.8);
