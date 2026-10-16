@@ -53,10 +53,10 @@ document.querySelectorAll('.save-button').forEach((button) => {
 const propertyCollection = {
     'tmlse': {
         name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'Starting from ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'AVAILABLE NOW',
-        facts: ['Home', 'For Sale', 'C of O'],
+        facts: ['Home', 'For Sale'],
         description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
         amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
-        summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '1,000 sqm commercial'], ['Price', 'From ₦86.5M'], ['Location', 'Lekki-Epe Expressway']],
+        summary: [['Type', 'Estate land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '1,000 sqm commercial'], ['Price', 'From ₦86.5M'], ['Location', 'Lekki-Epe Expressway']],
         images: ['../assets/images/tmlse-1.jpg', '../assets/images/tmlse-2.jpg', '../assets/images/tmlse-3.jpg']
     },
     'tfgse': {
@@ -64,7 +64,7 @@ const propertyCollection = {
         description: 'The estate is eco-friendly which is strategically located along the Lekki-Epe Expressway, opposite the proposed Lagos International Airport, the estate is surrounded by major economic and industrial developments, including Lekki Free Trade Zone, Lekki Deep Sea Port, Dangote Refinery and Petrochemicals, Pan-Atlantic University, Coscharis Group, and Alaro City.',
         amenities: ['EV charging port', 'Electricity', 'Solar Powered', 'Renewable Energy', 'Recreational centre', 'Motorable & Accessible Roads', 'Safe and Secured', 'Green Area'],
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
-        images: ['../assets/images/tfgse-1.jpg', '../assets/images/tfgse-2.jpg', '../assets/images/tfgse-3.jpg']
+        images: ['../assets/images/tfgse-1.jpg', '../assets/images/tfgse-2', '../assets/images/tfgse-3']
     },
     'the-atrium': {
         name: 'The Atrium', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
