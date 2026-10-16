@@ -59,6 +59,7 @@ type Property = {
   type: string;
   location: string;
   price: string;
+  priceOptions?: Array<[string, string]>;
   status: string;
   facts: string[];
   description: string;
@@ -69,11 +70,11 @@ type Property = {
 
 const propertyCollection: Record<string, Property> = {
   'tmlse': {
-    name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Katampe', price: '₦850M', status: 'Featured opportunity',
-    facts: ['5 bedrooms', '6 bathrooms', '740 sqm'],
+    name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'Starting from ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'Featured opportunity',
+    facts: ['300 sqm plots', '500 sqm plots', '1,000 sqm commercial'],
     description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
     amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
-    summary: [['Type', 'Detached house'], ['Status', 'For sale'], ['Bedrooms', '5'], ['Bathrooms', '6'], ['Internal area', '740 sqm'], ['Location', 'Katampe']],
+    summary: [['Type', 'Estate land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '1,000 sqm commercial'], ['Price', 'From ₦86.5M'], ['Location', 'Lekki-Epe Expressway']],
     images: ['../assets/images/tmlse-1.jpg', '../assets/images/tmlse-2.jpg', '../assets/images/tmlse-3.jpg']
   },
   'meridian-residence': {
@@ -283,6 +284,13 @@ function renderPropertyDetail(): void {
 
   const facts = document.getElementById('property-facts');
   if (facts) facts.innerHTML = property.facts.map((fact) => `<span>${fact}</span>`).join('');
+  const priceOptions = document.getElementById('property-price-options');
+  const priceOptionsList = document.getElementById('property-price-options-list');
+  if (priceOptions && priceOptionsList) {
+    const hasPriceOptions = Boolean(property.priceOptions?.length);
+    priceOptions.hidden = !hasPriceOptions;
+    priceOptionsList.innerHTML = property.priceOptions?.map(([size, price]) => `<article><span>${size}</span><strong>${price}</strong></article>`).join('') ?? '';
+  }
   const amenities = document.getElementById('property-amenities-list');
   if (amenities) amenities.innerHTML = property.amenities.map((amenity) => `<li>${amenity}</li>`).join('');
   const summary = document.getElementById('property-summary-list');

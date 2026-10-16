@@ -1973,6 +1973,47 @@ textarea {
 
 .property-facts span:last-child { border-right: 0; }
 
+.property-price-options {
+  margin-bottom: 66px;
+  padding: 30px;
+  border: 1px solid rgba(43, 118, 255, 0.16);
+  background: linear-gradient(135deg, #f4f8ff, #ffffff);
+}
+
+.property-price-options h2 {
+  margin: 18px 0 12px;
+  color: var(--ink);
+  font-size: clamp(2.2rem, 3.4vw, 3.8rem);
+  letter-spacing: -.07em;
+  line-height: .92;
+}
+
+.property-price-options h2 em { font-family: var(--serif); font-weight: 600; }
+
+.property-price-options > p:last-of-type {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.price-options-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.price-options-list article {
+  padding: 18px;
+  border: 1px solid rgba(12, 33, 71, .1);
+  background: rgba(255,255,255,.8);
+}
+
+.price-options-list span,
+.price-options-list strong { display: block; }
+.price-options-list span { margin-bottom: 9px; color: var(--muted); font: 700 8px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.price-options-list strong { color: var(--blue-strong); font-size: clamp(1rem, 1.4vw, 1.25rem); letter-spacing: -.04em; }
+
 .property-description h2,
 .property-amenities h2,
 .property-summary h2,
@@ -2066,6 +2107,8 @@ textarea {
   .property-content { padding-top: 42px; padding-bottom: 54px; }
   .property-facts { margin-bottom: 46px; }
   .property-facts span { padding: 14px 8px; font-size: .8rem; }
+  .property-price-options { margin-bottom: 46px; padding: 22px 18px; }
+  .price-options-list { grid-template-columns: 1fr; gap: 8px; margin-top: 20px; }
   .property-amenities ul { grid-template-columns: 1fr; }
   .similar-heading { align-items: start; flex-direction: column; }
 }
