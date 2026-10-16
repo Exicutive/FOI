@@ -64,7 +64,7 @@ type Property = {
   facts: string[];
   description: string;
   amenities: string[];
-  summary: Array<[string, string]>;
+  summary?: Array<[string, string]>;
   images: string[];
 };
 
@@ -85,11 +85,10 @@ const propertyCollection: Record<string, Property> = {
     images: ['../assets/images/tfgse-1.JPG', '../assets/images/tfgse-2.JPG', '../assets/images/tfgse-3.jpg']
   },
   'mbe': {
-    name: 'Meridian Boulevard Estate', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
-    description: 'Meridian Boulevard Estate offers a refined workplace in the commercial heart of Wuse II. Designed for businesses that value presence and performance, its flexible floor plate, polished arrival experience, and professional building services make it a compelling headquarters address.',
-    amenities: ['High-speed elevators', 'Reception lobby', 'Backup generation', 'Secure access control', 'Ample parking', 'On-site facility management'],
-    summary: [['Type', 'Grade A office'], ['Status', 'To lease'], ['Area', '1,200 sqm'], ['Parking', 'Available'], ['Power', 'Backup generation'], ['Location', 'Wuse II']],
-    images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85']
+    name: 'Meridian Boulevard Estate', type: 'Land', location: 'Okun-Ajah, Ogombo, Lagos', price: 'SALES CLOSED', status: 'Sold', facts: ['Home', 'Sold', 'C of O'],
+    description: 'Meridian Boulevard Estate, located in Okun-Ajah, Ogombo, Lagos, is now fully sold out. Situated within Lagos’s rapidly developing premium real estate corridor, the estate offered early investors an opportunity to benefit from the area’s growth.',
+    amenities: ['Green Area', 'Electricity', 'Safe and Secured', 'Motorable & Accessible Roads', 'Swimming pool', 'Water Treatment Plant'],
+    images: ['../assets/images/mbe-1.webph', '../assets/images/mbe-2.webph', '../assets/images/mbe-3.webph']
   },
   'vista-terraces': {
     name: 'Vista Terraces', type: 'Land', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],
@@ -293,8 +292,11 @@ function renderPropertyDetail(): void {
   }
   const amenities = document.getElementById('property-amenities-list');
   if (amenities) amenities.innerHTML = property.amenities.map((amenity) => `<li>${amenity}</li>`).join('');
+  const summarySection = document.getElementById('property-summary');
   const summary = document.getElementById('property-summary-list');
-  if (summary) summary.innerHTML = property.summary.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+  const summaryItems = property.summary ?? [];
+  if (summary) summary.innerHTML = summaryItems.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+  if (summarySection) summarySection.hidden = summaryItems.length === 0;
 
   const image = document.getElementById('gallery-image') as HTMLImageElement | null;
   const thumbnails = document.getElementById('gallery-thumbnails');

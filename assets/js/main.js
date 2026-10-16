@@ -71,6 +71,7 @@ const propertyCollection = {
         description: 'Meridian Boulevard Estate, located in Okun-Ajah, Ogombo, Lagos, is now fully sold out. Situated within Lagos’s rapidly developing premium real estate corridor, the estate offered early investors an opportunity to benefit from the area’s growth.',
         amenities: ['Green Area', 'Electricity', 'Safe and Secured', 'Motorable & Accessible Roads', 'Swimming pool', 'Water Treatment Plant'],
         images: ['../assets/images/mbe-1.webph', '../assets/images/mbe-2.webph', '../assets/images/mbe-3.webph']
+  
     },
     'vista-terraces': {
         name: 'Vista Terraces', type: 'Land', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],
@@ -271,9 +272,13 @@ function renderPropertyDetail() {
     const amenities = document.getElementById('property-amenities-list');
     if (amenities)
         amenities.innerHTML = property.amenities.map((amenity) => `<li>${amenity}</li>`).join('');
+    const summarySection = document.getElementById('property-summary');
     const summary = document.getElementById('property-summary-list');
+    const summaryItems = property.summary ?? [];
     if (summary)
-        summary.innerHTML = property.summary.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+        summary.innerHTML = summaryItems.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+    if (summarySection)
+        summarySection.hidden = summaryItems.length === 0;
     const image = document.getElementById('gallery-image');
     const thumbnails = document.getElementById('gallery-thumbnails');
     let activeImage = 0;
