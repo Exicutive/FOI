@@ -53,7 +53,7 @@ document.querySelectorAll('.save-button').forEach((button) => {
 const propertyCollection = {
     'tmlse': {
         name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'Starting from ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'AVAILABLE NOW',
-        facts: ['Home', 'For Sale', 'C of O'],
+        facts: ['Home', 'For Sale'],
         description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
         amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
         summary: [['Type', 'Estate land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '1,000 sqm commercial'], ['Price', 'From ₦86.5M'], ['Location', 'Lekki-Epe Expressway']],
@@ -70,8 +70,7 @@ const propertyCollection = {
         name: 'Meridian Boulevard Estate', type: 'Land', location: 'Okun-Ajah, Ogombo, Lagos', price: 'SALES CLOSED', status: 'Sold', facts: ['Home', 'Sold', 'C of O'],
         description: 'Meridian Boulevard Estate, located in Okun-Ajah, Ogombo, Lagos, is now fully sold out. Situated within Lagos’s rapidly developing premium real estate corridor, the estate offered early investors an opportunity to benefit from the area’s growth.',
         amenities: ['Green Area', 'Electricity', 'Safe and Secured', 'Motorable & Accessible Roads', 'Swimming pool', 'Water Treatment Plant'],
-        images: ['../assets/images/mbe-1.webph', '../assets/images/mbe-2.webph', '../assets/images/mbe-3.webph']
-  
+        images: ['../assets/images/mbe-1.webp', '../assets/images/mbe-2.webp']
     },
     'vista-terraces': {
         name: 'Vista Terraces', type: 'Land', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],
