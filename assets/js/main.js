@@ -64,7 +64,7 @@ const propertyCollection = {
         description: 'The estate is eco-friendly which is strategically located along the Lekki-Epe Expressway, opposite the proposed Lagos International Airport, the estate is surrounded by major economic and industrial developments, including Lekki Free Trade Zone, Lekki Deep Sea Port, Dangote Refinery and Petrochemicals, Pan-Atlantic University, Coscharis Group, and Alaro City.',
         amenities: ['EV charging port', 'Electricity', 'Solar Powered', 'Renewable Energy', 'Recreational centre', 'Motorable & Accessible Roads', 'Safe and Secured', 'Green Area'],
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
-        images: ['../assets/images/tfgse-1.jpg', '../assets/images/tfgse-2', '../assets/images/tfgse-3']
+        images: ['../assets/images/tfgse-1.jpg', '../assets/images/tfgse-2.jpg', '../assets/images/tfgse-3.jpg']
     },
     'the-atrium': {
         name: 'The Atrium', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
