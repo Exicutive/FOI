@@ -320,6 +320,7 @@ function renderPropertyDetail(): void {
       card.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openProperty(card); } });
     });
   }
+  page.setAttribute('aria-busy', 'false');
 }
 
 renderPropertyDetail();

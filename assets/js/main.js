@@ -306,6 +306,7 @@ function renderPropertyDetail() {
             } });
         });
     }
+    page.setAttribute('aria-busy', 'false');
 }
 renderPropertyDetail();
 const developmentPhases = {
