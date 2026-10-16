@@ -135,63 +135,6 @@ document.querySelectorAll<HTMLElement>('.property-card[data-slug]').forEach((car
   });
 });
 
-function initLatestProductsSlider(): void {
-  const track = document.querySelector<HTMLElement>('[data-latest-products-track]');
-  const previous = document.querySelector<HTMLButtonElement>('[data-latest-products-prev]');
-  const next = document.querySelector<HTMLButtonElement>('[data-latest-products-next]');
-  if (!track || !previous || !next) return;
-
-  const updateControls = (): void => {
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    previous.disabled = track.scrollLeft <= 2;
-    next.disabled = track.scrollLeft >= maxScroll - 2;
-  };
-  const move = (direction: number): void => {
-    track.scrollBy({ left: direction * Math.max(track.clientWidth * 0.82, 280), behavior: 'smooth' });
-  };
-
-  previous.addEventListener('click', () => move(-1));
-  next.addEventListener('click', () => move(1));
-  track.addEventListener('scroll', updateControls, { passive: true });
-  window.addEventListener('resize', updateControls);
-  updateControls();
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  let autoAdvanceTimer: number | undefined;
-  let isPointerOver = false;
-  let isFocused = false;
-  const stopAutoAdvance = (): void => {
-    if (autoAdvanceTimer !== undefined) window.clearTimeout(autoAdvanceTimer);
-    autoAdvanceTimer = undefined;
-  };
-  const scheduleAutoAdvance = (): void => {
-    stopAutoAdvance();
-    if (isPointerOver || isFocused || document.hidden) return;
-    autoAdvanceTimer = window.setTimeout(() => {
-      const maxScroll = track.scrollWidth - track.clientWidth;
-      if (track.scrollLeft >= maxScroll - 2) {
-        track.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        move(1);
-      }
-      scheduleAutoAdvance();
-    }, 5000);
-  };
-
-  track.addEventListener('pointerenter', () => { isPointerOver = true; stopAutoAdvance(); });
-  track.addEventListener('pointerleave', () => { isPointerOver = false; scheduleAutoAdvance(); });
-  track.addEventListener('focusin', () => { isFocused = true; stopAutoAdvance(); });
-  track.addEventListener('focusout', (event) => {
-    isFocused = event.relatedTarget instanceof Node && track.contains(event.relatedTarget);
-    if (!isFocused) scheduleAutoAdvance();
-  });
-  document.addEventListener('visibilitychange', scheduleAutoAdvance);
-  scheduleAutoAdvance();
-}
-
-initLatestProductsSlider();
-
 function setText(id: string, value: string): void {
   const element = document.getElementById(id);
   if (element) element.textContent = value;

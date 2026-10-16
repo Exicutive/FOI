@@ -116,62 +116,6 @@ document.querySelectorAll('.property-card[data-slug]').forEach((card) => {
         }
     });
 });
-function initLatestProductsSlider() {
-    const track = document.querySelector('[data-latest-products-track]');
-    const previous = document.querySelector('[data-latest-products-prev]');
-    const next = document.querySelector('[data-latest-products-next]');
-    if (!track || !previous || !next)
-        return;
-    const updateControls = () => {
-        const maxScroll = track.scrollWidth - track.clientWidth;
-        previous.disabled = track.scrollLeft <= 2;
-        next.disabled = track.scrollLeft >= maxScroll - 2;
-    };
-    const move = (direction) => {
-        track.scrollBy({ left: direction * Math.max(track.clientWidth * 0.82, 280), behavior: 'smooth' });
-    };
-    previous.addEventListener('click', () => move(-1));
-    next.addEventListener('click', () => move(1));
-    track.addEventListener('scroll', updateControls, { passive: true });
-    window.addEventListener('resize', updateControls);
-    updateControls();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-        return;
-    let autoAdvanceTimer;
-    let isPointerOver = false;
-    let isFocused = false;
-    const stopAutoAdvance = () => {
-        if (autoAdvanceTimer !== undefined)
-            window.clearTimeout(autoAdvanceTimer);
-        autoAdvanceTimer = undefined;
-    };
-    const scheduleAutoAdvance = () => {
-        stopAutoAdvance();
-        if (isPointerOver || isFocused || document.hidden)
-            return;
-        autoAdvanceTimer = window.setTimeout(() => {
-            const maxScroll = track.scrollWidth - track.clientWidth;
-            if (track.scrollLeft >= maxScroll - 2) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-            }
-            else {
-                move(1);
-            }
-            scheduleAutoAdvance();
-        }, 5000);
-    };
-    track.addEventListener('pointerenter', () => { isPointerOver = true; stopAutoAdvance(); });
-    track.addEventListener('pointerleave', () => { isPointerOver = false; scheduleAutoAdvance(); });
-    track.addEventListener('focusin', () => { isFocused = true; stopAutoAdvance(); });
-    track.addEventListener('focusout', (event) => {
-        isFocused = event.relatedTarget instanceof Node && track.contains(event.relatedTarget);
-        if (!isFocused)
-            scheduleAutoAdvance();
-    });
-    document.addEventListener('visibilitychange', scheduleAutoAdvance);
-    scheduleAutoAdvance();
-}
-initLatestProductsSlider();
 function setText(id, value) {
     const element = document.getElementById(id);
     if (element)
