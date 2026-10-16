@@ -69,7 +69,7 @@ type Property = {
 
 const propertyCollection: Record<string, Property> = {
   'tmlse': {
-    name: 'The Marbella Luxury & Smart Estate', type: 'House · Katampe', location: 'Katampe', price: '₦850M', status: 'Featured opportunity',
+    name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Katampe', price: '₦850M', status: 'Featured opportunity',
     facts: ['5 bedrooms', '6 bathrooms', '740 sqm'],
     description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
     amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
@@ -77,35 +77,35 @@ const propertyCollection: Record<string, Property> = {
     images: ['../assets/images/tmlse-1.jpg', '../assets/images/tmlse-2.jpg', '../assets/images/tmlse-3.jpg']
   },
   'meridian-residence': {
-    name: 'Meridian Residence', type: 'Apartment · Life Camp', location: 'Life Camp', price: '₦265M', status: 'Available now', facts: ['3 bedrooms', '3 bathrooms', '210 sqm'],
+    name: 'Meridian Residence', type: 'Apartment', location: 'Life Camp', price: '₦265M', status: 'Available now', facts: ['3 bedrooms', '3 bathrooms', '210 sqm'],
     description: 'Meridian Residence is an elegantly finished apartment designed for calm, effortless city living. Its thoughtful plan balances a generous open-plan living area with three quiet bedrooms, all within a well-managed Life Camp address.',
     amenities: ['Residents’ gym', 'Elevator access', 'Backup power', '24-hour security', 'Dedicated parking', 'Private balcony'],
     summary: [['Type', 'Apartment'], ['Status', 'For sale'], ['Bedrooms', '3'], ['Bathrooms', '3'], ['Internal area', '210 sqm'], ['Location', 'Life Camp']],
     images: ['https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1600607688960-e095ff83135c?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=85']
   },
   'the-atrium': {
-    name: 'The Atrium', type: 'Commercial · Wuse II', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
+    name: 'The Atrium', type: 'Commercial', location: 'Wuse II', price: 'Price on request', status: 'Available to lease', facts: ['Grade A office', '1,200 sqm', 'Prime address'],
     description: 'The Atrium offers a refined workplace in the commercial heart of Wuse II. Designed for businesses that value presence and performance, its flexible floor plate, polished arrival experience, and professional building services make it a compelling headquarters address.',
     amenities: ['High-speed elevators', 'Reception lobby', 'Backup generation', 'Secure access control', 'Ample parking', 'On-site facility management'],
     summary: [['Type', 'Grade A office'], ['Status', 'To lease'], ['Area', '1,200 sqm'], ['Parking', 'Available'], ['Power', 'Backup generation'], ['Location', 'Wuse II']],
     images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85']
   },
   'vista-terraces': {
-    name: 'Vista Terraces', type: 'Land · Guzape', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],
+    name: 'Vista Terraces', type: 'Land', location: 'Guzape', price: '₦190M', status: 'Available now', facts: ['Residential land', '1,850 sqm', 'Serviced area'],
     description: 'A rare residential land opportunity in fast-maturing Guzape. Vista Terraces offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
     amenities: ['Paved road access', 'Electricity connection', 'Drainage provision', 'Developing neighbourhood', 'Survey documentation', 'Secure vicinity'],
     summary: [['Type', 'Residential land'], ['Status', 'For sale'], ['Land area', '1,850 sqm'], ['Title', 'Available on request'], ['Access', 'Paved road'], ['Location', 'Guzape']],
     images: ['https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85']
   },
   'aster-court': {
-    name: 'Aster Court', type: 'Townhouse · Jabi', location: 'Jabi', price: '₦430M', status: 'Available now', facts: ['4 bedrooms', '4 bathrooms', '340 sqm'],
+    name: 'Aster Court', type: 'Townhouse', location: 'Jabi', price: '₦430M', status: 'Available now', facts: ['4 bedrooms', '4 bathrooms', '340 sqm'],
     description: 'Aster Court is a composed four-bedroom townhouse that pairs warm, finished interiors with the convenience of a central Jabi location. It is a home designed for everyday comfort, with room to host and settle in.',
     amenities: ['Fitted kitchen', 'Private garden', 'Family lounge', 'BQ', 'Estate security', 'Two-car parking'],
     summary: [['Type', 'Townhouse'], ['Status', 'For sale'], ['Bedrooms', '4'], ['Bathrooms', '4'], ['Internal area', '340 sqm'], ['Location', 'Jabi']],
     images: ['https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1000&q=85']
   },
   'one-central': {
-    name: 'One Central', type: 'Commercial · Central Area', location: 'Central Area', price: 'Price on request', status: 'Available to lease', facts: ['Retail & office', '680 sqm', 'Central location'],
+    name: 'One Central', type: 'Commercial', location: 'Central Area', price: 'Price on request', status: 'Available to lease', facts: ['Retail & office', '680 sqm', 'Central location'],
     description: 'One Central puts a flexible retail and office opportunity at the centre of a thriving business district. Its clear visibility, modern interiors, and adaptable configuration suit a business looking to make an assured arrival.',
     amenities: ['Flexible floor plan', 'Retail frontage', 'Backup power', 'Visitor parking', 'Security desk', 'Air conditioning'],
     summary: [['Type', 'Retail & office'], ['Status', 'To lease'], ['Area', '680 sqm'], ['Visibility', 'High street frontage'], ['Power', 'Backup generation'], ['Location', 'Central Area']],
@@ -134,6 +134,30 @@ document.querySelectorAll<HTMLElement>('.property-card[data-slug]').forEach((car
     }
   });
 });
+
+function initLatestProductsSlider(): void {
+  const track = document.querySelector<HTMLElement>('[data-latest-products-track]');
+  const previous = document.querySelector<HTMLButtonElement>('[data-latest-products-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-latest-products-next]');
+  if (!track || !previous || !next) return;
+
+  const updateControls = (): void => {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    previous.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= maxScroll - 2;
+  };
+  const move = (direction: number): void => {
+    track.scrollBy({ left: direction * Math.max(track.clientWidth * 0.82, 280), behavior: 'smooth' });
+  };
+
+  previous.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+  track.addEventListener('scroll', updateControls, { passive: true });
+  window.addEventListener('resize', updateControls);
+  updateControls();
+}
+
+initLatestProductsSlider();
 
 function setText(id: string, value: string): void {
   const element = document.getElementById(id);
