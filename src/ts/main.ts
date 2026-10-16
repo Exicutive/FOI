@@ -155,6 +155,39 @@ function initLatestProductsSlider(): void {
   track.addEventListener('scroll', updateControls, { passive: true });
   window.addEventListener('resize', updateControls);
   updateControls();
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let autoAdvanceTimer: number | undefined;
+  let isPointerOver = false;
+  let isFocused = false;
+  const stopAutoAdvance = (): void => {
+    if (autoAdvanceTimer !== undefined) window.clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = undefined;
+  };
+  const scheduleAutoAdvance = (): void => {
+    stopAutoAdvance();
+    if (isPointerOver || isFocused || document.hidden) return;
+    autoAdvanceTimer = window.setTimeout(() => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= maxScroll - 2) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        move(1);
+      }
+      scheduleAutoAdvance();
+    }, 5000);
+  };
+
+  track.addEventListener('pointerenter', () => { isPointerOver = true; stopAutoAdvance(); });
+  track.addEventListener('pointerleave', () => { isPointerOver = false; scheduleAutoAdvance(); });
+  track.addEventListener('focusin', () => { isFocused = true; stopAutoAdvance(); });
+  track.addEventListener('focusout', (event) => {
+    isFocused = event.relatedTarget instanceof Node && track.contains(event.relatedTarget);
+    if (!isFocused) scheduleAutoAdvance();
+  });
+  document.addEventListener('visibilitychange', scheduleAutoAdvance);
+  scheduleAutoAdvance();
 }
 
 initLatestProductsSlider();
