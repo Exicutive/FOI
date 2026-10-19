@@ -73,8 +73,8 @@ const propertyCollection = {
         images: ['../assets/images/mbe-1.webp', '../assets/images/mbe-2.webp']
     },
     'qpe': {
-        name: 'Queens Park 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'From ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
-        description: 'A rare residential land opportunity in fast-maturing Guzape. Queens Park 2 offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
+        name: 'Queens Park Estate Phase 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'From ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
+        description: 'A rare residential land opportunity in fast-maturing Guzape. Queens Park Estate Phase 2 offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
         amenities: ['Electricity', 'Recreational centre', 'Estate Gate House', 'Perimeter Fencing', 'Green Area', 'Motorable & Accessible'],
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Land area', '600 sqm']],
         images: ['../assets/images/qpe-1.JPG', '../assets/images/qpe-2.jpg', '../assets/images/qpe-3.JPG']
