@@ -336,7 +336,7 @@ const developmentPhases = {
         phase: 'Design & approvals', title: 'Coordinate the details.', sectionTitle: 'A brief that holds together.',
         lead: 'We coordinate the decisions between aspiration and execution, bringing design, cost, and approvals into alignment.',
         body: 'Good development coordination gives every consultant a shared frame of reference. We help translate project goals into a disciplined brief, coordinate the right technical inputs, and maintain sight of costs, programme, and approvals as a concept becomes a buildable plan.',
-        image: 'https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&w=1600&q=88',
+        image: '../assets/images/ctd.jpeg',
         deliverables: ['Development brief', 'Consultant coordination', 'Design review checkpoints', 'Cost-plan alignment', 'Approvals programme', 'Tender readiness support'],
         steps: [['Define', 'Turn requirements into a concise, coordinated design and delivery brief.'], ['Coordinate', 'Bring architecture, engineering, planning, and cost inputs together.'], ['Prepare', 'Create the documentation and approval pathway needed to move forward.']]
     },
@@ -344,7 +344,7 @@ const developmentPhases = {
         phase: 'Construction & handover', title: 'Build with oversight.', sectionTitle: 'Keep the finished asset in view.',
         lead: 'Careful oversight through construction protects the intent of the brief and prepares the asset for a confident handover.',
         body: 'We bring a client-side perspective to the delivery phase, creating useful checkpoints around progress, quality, variation, and readiness. As the project nears completion, we help focus attention on close-out and the practical details that make the finished place ready to occupy, lease, or sell.',
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=88',
+        image: '../assets/images/bwo.jpeg',
         deliverables: ['Progress review meetings', 'Quality checkpoint support', 'Cost and variation visibility', 'Programme monitoring', 'Practical completion planning', 'Handover and close-out readiness'],
         steps: [['Monitor', 'Review progress against the brief, programme, budget, and quality expectations.'], ['Resolve', 'Keep key decisions, issues, and changes visible and moving forward.'], ['Handover', 'Prepare for a considered close-out and a finished asset ready for use.']]
     }
