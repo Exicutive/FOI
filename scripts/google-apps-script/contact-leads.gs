@@ -24,7 +24,7 @@ function doPost(event) {
     if (!lead.name || !lead.email) return response_({ ok: false, error: 'Name and email are required.' });
 
     const lock = LockService.getScriptLock();
-    lock.waitLock(10_000);
+    lock.waitLock(10000);
     try {
       const sheet = getLeadsSheet_();
       sheet.appendRow([
@@ -75,7 +75,7 @@ function parseLead_(event) {
     email: clean_(data.email, 160),
     phone: clean_(data.phone, 60),
     interest: clean_(data.interest, 120),
-    message: clean_(data.message, 2_000),
+    message: clean_(data.message, 2000),
     source: clean_(data.source, 120),
     page: clean_(data.page, 500),
     website: clean_(data.website, 200),
