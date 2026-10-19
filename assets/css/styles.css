@@ -348,8 +348,7 @@ textarea {
 .search-button b,
 .text-button b,
 .underlined-link b,
-.contact-lines a,
-.footer-inner a {
+.contact-lines a {
   font-size: 18px;
   line-height: 1;
 }
@@ -1140,43 +1139,6 @@ textarea {
 }
 
 .site-footer {
-  padding: 26px 0 34px;
-  border-top: 1px solid var(--line);
-  background: rgba(255,255,255,0.1);
-}
-
-.footer-inner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: end;
-  gap: 24px;
-}
-
-.ink-logo {
-  color: var(--ink);
-}
-
-.footer-inner p,
-.footer-inner a {
-  margin: 0;
-  color: var(--muted);
-  font: 600 9px/1.7 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.footer-inner > div {
-  display: grid;
-  justify-items: end;
-  gap: 8px;
-}
-
-.footer-inner > div p {
-  text-align: right;
-}
-
-.site-footer {
   padding: 36px 0 16px;
   border: 0;
   border-top: 4px solid #2779e9;
@@ -1330,8 +1292,7 @@ textarea {
   .intro,
   .listing-heading,
   .services-intro,
-  .enquiry,
-  .footer-inner {
+  .enquiry {
     grid-template-columns: 1fr;
   }
 
@@ -1372,14 +1333,6 @@ textarea {
   .property-grid,
   .service-grid {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .footer-inner > div {
-    justify-items: start;
-  }
-
-  .footer-inner > div p {
-    text-align: left;
   }
 
   .footer-main { grid-template-columns: minmax(240px, 1.3fr) 1fr 1fr; gap: 36px; }
