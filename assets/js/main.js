@@ -79,12 +79,12 @@ const propertyCollection = {
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Land area', '600 sqm']],
         images: ['../assets/images/qpe-1.JPG', '../assets/images/qpe-2.jpg', '../assets/images/qpe-3.JPG']
     },
-    'aster-court': {
-        name: 'Aster Court', type: 'Townhouse', location: 'Jabi', price: '₦430M', status: 'Available now', facts: ['4 bedrooms', '4 bathrooms', '340 sqm'],
-        description: 'Aster Court is a composed four-bedroom townhouse that pairs warm, finished interiors with the convenience of a central Jabi location. It is a home designed for everyday comfort, with room to host and settle in.',
+    'oge': {
+        name: 'Oakville Green Estate', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'From ₦4.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'],
+        description: 'Oakville Green Estate is a composed four-bedroom Land that pairs warm, finished interiors with the convenience of a central Mowe-Ofada, Ogun location. It is a home designed for everyday comfort, with room to host and settle in.',
         amenities: ['Fitted kitchen', 'Private garden', 'Family lounge', 'BQ', 'Estate security', 'Two-car parking'],
-        summary: [['Type', 'Townhouse'], ['Status', 'For sale'], ['Bedrooms', '4'], ['Bathrooms', '4'], ['Internal area', '340 sqm'], ['Location', 'Jabi']],
-        images: ['https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1000&q=85']
+        summary: [['Type', 'Land'], ['Status', 'For sale'], ['Bedrooms', '4'], ['Bathrooms', '4'], ['Internal area', '340 sqm'], ['Location', 'Mowe-Ofada, Ogun']],
+        images: ['../assets/images/oge-1.jpg', '../assets/images/oge-2.jpg', '../assets/images/oge-3.jpg']
     },
     'one-central': {
         name: 'One Central', type: 'Commercial', location: 'Central Area', price: 'Price on request', status: 'Available to lease', facts: ['Retail & office', '680 sqm', 'Central location'],
@@ -166,7 +166,7 @@ function syncStructuredData(title, description, canonicalUrl) {
         name: 'FOI Developments',
         legalName: 'FOI Developments Ltd',
         url: `${siteOrigin}/`,
-        email: 'info@foidev.com',
+        email: 'info@foidevs.com',
         telephone: ['+234 813 858 2155', '+234 707 621 2073'],
         address: {
             '@type': 'PostalAddress',
@@ -422,7 +422,7 @@ document.querySelectorAll('.site-footer .footer-main > .footer-links:last-of-typ
     <a class="footer-detail" href="/contact"><span class="footer-detail-icon" aria-hidden="true">⌖</span><span><small>VISIT</small><strong>No. 2, Akabogu Street, Lagos Business School, Ajah, Lagos</strong></span></a>
     <a class="footer-detail" href="tel:+2348138582155"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 813 858 2155</strong></span></a>
     <a class="footer-detail" href="tel:+2347076212073"><span class="footer-detail-icon" aria-hidden="true">⌕</span><span><small>CALL</small><strong>+234 707 621 2073</strong></span></a>
-    <a class="footer-detail" href="mailto:info@foidev.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidev.com</strong></span></a>
+    <a class="footer-detail" href="mailto:info@foidevs.com"><span class="footer-detail-icon" aria-hidden="true">@</span><span><small>EMAIL</small><strong>info@foidevs.com</strong></span></a>
   `;
     const visitLink = section.querySelector('.footer-detail');
     if (visitLink)
