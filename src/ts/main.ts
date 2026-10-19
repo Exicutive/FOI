@@ -92,7 +92,7 @@ const propertyCollection: Record<string, Property> = {
   },
   'qpe': {
     name: 'Queens Park Estate Phase 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'From ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
-    description: 'A rare residential land opportunity in fast-maturing Guzape. Queens Park Estate Phase 2 offers the room, aspect, and infrastructure to create a substantial private home or a carefully considered boutique residential project.',
+    description: 'Queens Park Estate Phase 2 is a residential land opportunity in Mowe-Ofada, Ogun State. It offers a 600 sqm plot within an accessible setting for buyers planning a private home or long-term property investment.',
     amenities: ['Electricity', 'Recreational centre', 'Estate Gate House', 'Perimeter Fencing', 'Green Area', 'Motorable & Accessible'],
     summary: [['Type', 'Land'], ['Status', 'For sale'], ['Land area', '600 sqm']], 
     images: ['../assets/images/qpe-1.JPG', '../assets/images/qpe-2.jpg', '../assets/images/qpe-3.JPG']
@@ -170,11 +170,16 @@ function shortenDescription(description: string): string {
 }
 
 function pageSchemaType(): string {
-  const pathname = window.location.pathname;
-  if (pathname.endsWith('/about.html')) return 'AboutPage';
-  if (pathname.endsWith('/contact.html')) return 'ContactPage';
-  if (pathname.endsWith('/properties.html')) return 'CollectionPage';
-  return 'WebPage';
+  const normalizedPath = window.location.pathname.replace(/\/$/, '').replace(/^\/pages\//, '/');
+  const pageTypes: Record<string, string> = {
+    '/about': 'AboutPage',
+    '/about.html': 'AboutPage',
+    '/contact': 'ContactPage',
+    '/contact.html': 'ContactPage',
+    '/properties': 'CollectionPage',
+    '/properties.html': 'CollectionPage',
+  };
+  return pageTypes[normalizedPath] ?? 'WebPage';
 }
 
 function syncStructuredData(title: string, description: string, canonicalUrl: string): void {
@@ -186,8 +191,17 @@ function syncStructuredData(title: string, description: string, canonicalUrl: st
     name: 'FOI Developments',
     legalName: 'FOI Developments Ltd',
     url: `${siteOrigin}/`,
+    logo: `${siteOrigin}/assets/images/foi-logo-mark.png`,
+    image: `${siteOrigin}/assets/images/tmlse-1.jpg`,
     email: 'info@foidevs.com',
-    telephone: ['+234 813 858 2155', '+234 707 621 2073'],
+    telephone: '+234 813 858 2155',
+    contactPoint: [{
+      '@type': 'ContactPoint',
+      telephone: '+234 707 621 2073',
+      contactType: 'customer service',
+      areaServed: 'NG',
+      availableLanguage: 'en',
+    }],
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'No. 2, Akabogu Street, Lagos Business School',
@@ -423,11 +437,42 @@ if (menuToggle && mobileNav) {
 
 const enquiryForm = document.querySelector<HTMLFormElement>('.enquiry-form');
 if (enquiryForm) {
-  enquiryForm.addEventListener('submit', (event) => {
+  enquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const message = enquiryForm.querySelector<HTMLElement>('.form-message');
-    if (message) message.textContent = 'Thank you. A FOI advisor will be in touch shortly.';
-    enquiryForm.reset();
+    const submitButton = enquiryForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const endpoint = enquiryForm.dataset.crmEndpoint?.trim();
+
+    if (!endpoint) {
+      if (message) message.textContent = 'The contact form is being set up. Please call or email us directly.';
+      return;
+    }
+
+    const formData = new FormData(enquiryForm);
+    const payload: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      payload[key] = typeof value === 'string' ? value : value.name;
+    });
+    payload.source = 'Website contact form';
+    payload.page = window.location.href;
+
+    if (message) message.textContent = 'Sending your message…';
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+      await fetch(endpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+      if (message) message.textContent = 'Thank you. A FOI advisor will be in touch shortly.';
+      enquiryForm.reset();
+    } catch {
+      if (message) message.textContent = 'We could not send your message. Please try again or contact us directly.';
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 }
 
