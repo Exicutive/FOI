@@ -905,6 +905,11 @@ textarea {
   letter-spacing: -0.05em;
 }
 
+/* The home grid is an overview, so its listing titles remain compact. */
+.home-page .property-details h3 {
+  font-size: clamp(1.2rem, 1.35vw, 1.55rem);
+}
+
 .property-details span {
   display: block;
   margin-top: 10px;
@@ -1941,6 +1946,7 @@ textarea {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   gap: 12px;
+  height: 550px;
 }
 
 .gallery-thumbnails button {
