@@ -104,12 +104,12 @@ const propertyCollection: Record<string, Property> = {
     summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Mowe-Ofada, Ogun']],
     images: ['../assets/images/oge-1.jpg', '../assets/images/oge-2.jpg', '../assets/images/oge-3.jpg']
   },
-  'one-central': {
-    name: 'One Central', type: 'Commercial', location: 'Central Area', price: 'Price on request', status: 'Available to lease', facts: ['Retail & office', '680 sqm', 'Central location'],
-    description: 'One Central puts a flexible retail and office opportunity at the centre of a thriving business district. Its clear visibility, modern interiors, and adaptable configuration suit a business looking to make an assured arrival.',
-    amenities: ['Flexible floor plan', 'Retail frontage', 'Backup power', 'Visitor parking', 'Security desk', 'Air conditioning'],
-    summary: [['Type', 'Retail & office'], ['Status', 'To lease'], ['Area', '680 sqm'], ['Visibility', 'High street frontage'], ['Power', 'Backup generation'], ['Location', 'Central Area']],
-    images: ['https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=88', 'https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1000&q=85', 'https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1000&q=85']
+  'ctv': {
+    name: 'Cityview Park & Resort', type: 'Land', location: 'Gousa District, Abuja', price: 'From ₦14M', priceOptions: [['200 sqm', '₦14,000,000'], ['300 sqm', '₦21,000,000'], ['500 sqm', '₦35,000,000'], ['1000 sqm - residential', '₦70,000,000'], ['1000 sqm - commercial', '₦150,000,000']], status: 'Available now', facts: ['Home', 'For Sale', 'FCDA', 'C of O'],
+    description: 'City View Park & Resort is a thoughtfully situated residential development in Gousa District, Abuja, designed for comfortable living in a calm and accessible environment. Its location offers a balance between residential tranquillity and everyday convenience, with key destinations such as the University of Abuja, Nnamdi Azikiwe International Airport, Idu Train Station, the Immigration Office, and the WAEC Office within reach. The estate presents an appealing setting for individuals and families seeking a well-connected place to call home.',
+    amenities: ['Golf club', 'Helipad', 'Mini Golf course', 'Electric car charger port', 'Artificial Intelligence Hub', 'Recreational Centre', "Mini Polo Course"],
+    summary: [['Type', 'Land'], ['Status', 'For sale'], ['Area', '200 sqm - Acres'], ['Smallest plot', '200 sqm'], ['Largest plot', '1,000 sqm commercial & Residential'], ['Location', 'Gousa District, Abuja']],
+    images: ['../assets/images/ctv-1.jpg', '../assets/images/ctv-2.jpg', '../assets/images/ctv-3.jpg']
   }
 };
 
