@@ -357,7 +357,7 @@ const developmentPhases: Record<string, DevelopmentPhase> = {
     phase: 'Site & feasibility', title: 'Start with the site.', sectionTitle: 'Clarity before commitment.',
     lead: 'A successful development begins with a measured understanding of its site, its constraints, and its potential.',
     body: 'Before design moves forward, we help establish what a site can realistically become. Our early-stage review brings land conditions, planning context, access, services, and commercial potential into one decision-making picture—so investment and design choices have a clear foundation.',
-    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=88',
+    image: '../assets/images/swts.jpeg',
     deliverables: ['Site and access review', 'Planning and zoning context', 'Infrastructure assessment', 'Initial feasibility direction', 'Risk and opportunity register', 'Development brief inputs'],
     steps: [['Understand', 'Review your ambition, commercial priorities, and the context around the site.'], ['Assess', 'Identify physical, regulatory, and infrastructure conditions that shape viability.'], ['Align', 'Set a clear feasibility direction before committing to design or construction.']]
   },
