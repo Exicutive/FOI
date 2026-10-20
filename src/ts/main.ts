@@ -142,7 +142,7 @@ const propertyCollection: Record<string, Property> = {
     name: 'Meridian Boulevard Estate', type: 'Land', location: 'Okun-Ajah, Ogombo, Lagos', price: 'SALES CLOSED', status: 'Sold', facts: ['Home', 'Sold', 'C of O'],
     description: 'Meridian Boulevard Estate, located in Okun-Ajah, Ogombo, Lagos, is now fully sold out. Situated within Lagos’s rapidly developing premium real estate corridor, the estate offered early investors an opportunity to benefit from the area’s growth.',
     amenities: ['Green Area', 'Electricity', 'Safe and Secured', 'Motorable & Accessible Roads', 'Swimming pool', 'Water Treatment Plant'],
-    images: ['../assets/images/mbe-1.webp', '../assets/images/mbe-2.webp']
+    images: ['../assets/images/mbe-1.webp', '../assets/images/mbe-2.webp', '../assets/images/mbe-3.jpg']
   },
   'qpe': {
     name: 'Queens Park Estate Phase 2', type: 'Land', location: 'Mowe-Ofada, Ogun', price: 'From ₦7.5M', status: 'Available now', facts: ['Home', 'For Sale', 'C of O'], priceOptions: [['600 sqm', '₦7,500,000']],
