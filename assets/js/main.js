@@ -282,6 +282,7 @@ function syncStructuredData(title, description, canonicalUrl) {
 function syncPageMetadata(title, description, image, cleanPath) {
     const shortDescription = shortenDescription(description);
     const canonicalUrl = canonicalPageUrl(cleanPath);
+    const imageUrl = image ? new URL(image, siteOrigin).href : undefined;
     document.title = title;
     ensureMeta('name', 'description', shortDescription);
     ensureMeta('property', 'og:title', title);
@@ -291,10 +292,10 @@ function syncPageMetadata(title, description, image, cleanPath) {
     ensureMeta('name', 'twitter:card', 'summary_large_image');
     ensureMeta('name', 'twitter:title', title);
     ensureMeta('name', 'twitter:description', shortDescription);
-    if (image) {
-        ensureMeta('property', 'og:image', image);
+    if (imageUrl) {
+        ensureMeta('property', 'og:image', imageUrl);
         ensureMeta('property', 'og:image:alt', title);
-        ensureMeta('name', 'twitter:image', image);
+        ensureMeta('name', 'twitter:image', imageUrl);
     }
     if (canonicalUrl) {
         ensureMeta('property', 'og:url', canonicalUrl);
