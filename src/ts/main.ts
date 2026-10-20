@@ -139,7 +139,7 @@ const propertyCollection: Record<string, Property> = {
     description: 'The estate is eco-friendly which is strategically located along the Lekki-Epe Expressway, opposite the proposed Lagos International Airport, the estate is surrounded by major economic and industrial developments, including Lekki Free Trade Zone, Lekki Deep Sea Port, Dangote Refinery and Petrochemicals, Pan-Atlantic University, Coscharis Group, and Alaro City.',
     amenities: ['EV charging port', 'Electricity', 'Solar Powered', 'Renewable Energy', 'Recreational centre', 'Motorable & Accessible Roads', 'Safe and Secured', 'Green Area'],
     summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
-    images: ['../assets/images/tfgse-1.JPG', '../assets/images/tfgse-2.JPG', '../assets/images/tfgse-3.jpg']
+    images: ['../assets/images/tfgse-1.JPG', '../assets/images/tfgse-2.JPG', '../assets/images/tfgse-3.webp']
   },
   'mbe': {
     name: 'Meridian Boulevard Estate', type: 'Land', location: 'Okun-Ajah, Ogombo, Lagos', price: 'SALES CLOSED', status: 'Sold', facts: ['Home', 'Sold', 'C of O'],
@@ -249,7 +249,7 @@ function syncStructuredData(title: string, description: string, canonicalUrl: st
     name: 'FOI Developments',
     legalName: 'FOI Developments Ltd',
     url: `${siteOrigin}/`,
-    logo: `${siteOrigin}/assets/images/foi-logo-mark.png`,
+    logo: `${siteOrigin}/assets/images/foi-logo-mark.webp`,
     image: `${siteOrigin}/assets/images/tmlse-1.jpg`,
     email: 'info@foidevs.com',
     telephone: '+234 813 858 2155',
