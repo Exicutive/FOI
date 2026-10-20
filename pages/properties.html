@@ -20,7 +20,9 @@
   <meta name="twitter:image" content="https://www.foidevs.com/assets/images/tmlse-1.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" />
+  <link id="site-fonts" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" media="print" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 <body>
@@ -72,7 +74,7 @@
           <button class="search-button" type="submit">View matches <b>↗</b></button>
           <p class="search-summary" id="search-summary" aria-live="polite">Explore selected opportunities</p>
         </form>
-        <div class="filters" role="tablist" aria-label="Filter properties">
+        <div class="filters" aria-label="Filter properties">
           <button class="filter active" data-filter="all">All opportunities <span>06</span></button>
           <button class="filter" data-filter="residential">Residential</button>
           <button class="filter" data-filter="commercial">Commercial</button>
@@ -80,7 +82,7 @@
           <button class="filter saved-filter" data-filter="saved">Saved <span data-saved-count>0</span></button>
         </div>
         <div class="property-grid">
-          <article class="property-card price-from-card" data-kind="land" data-location="lagos" data-budget="80-plus" data-slug="tmlse" tabindex="0" role="link" aria-label="View The Marbella Luxury and Smart Estate details"><div class="property-photo"><img loading="lazy" decoding="async" src="../assets/images/tmlse-1-hero.jpg" alt="The Marbella Luxury &amp; Smart Estate entrance" width="1600" height="1200" /><button class="save-button" aria-label="Save The Marbella Luxury and Smart Estate">♡</button></div><div class="property-details"><div><p>LAND · LEKKI-EPE EXPRESSWAY</p><h3>The Marbella Luxury &amp; Smart Estate</h3><span>300 sqm &nbsp;·&nbsp; 500 sqm &nbsp;·&nbsp; 1,000 sqm commercial</span></div><strong>From ₦86.5M</strong></div></article>
+          <article class="property-card price-from-card" data-kind="land" data-location="lagos" data-budget="80-plus" data-slug="tmlse" tabindex="0" role="link" aria-label="View The Marbella Luxury and Smart Estate details"><div class="property-photo"><img loading="lazy" decoding="async" src="../assets/images/tmlse-1-hero-mobile.jpg" alt="The Marbella Luxury &amp; Smart Estate entrance" width="900" height="675" /><button class="save-button" aria-label="Save The Marbella Luxury and Smart Estate">♡</button></div><div class="property-details"><div><p>LAND · LEKKI-EPE EXPRESSWAY</p><h3>The Marbella Luxury &amp; Smart Estate</h3><span>300 sqm &nbsp;·&nbsp; 500 sqm &nbsp;·&nbsp; 1,000 sqm commercial</span></div><strong>From ₦86.5M</strong></div></article>
           <article class="property-card price-from-card" data-kind="land" data-location="lagos" data-budget="under-20" data-slug="tfgse" tabindex="0" role="link" aria-label="View The Fairmont Green and Smart Estate details"><div class="property-photo"><img loading="lazy" decoding="async" src="../assets/images/tfgse-3.jpg" alt="The Fairmont Green &amp; Smart Estate entrance" /><button class="save-button" aria-label="Save The Fairmont Green &amp; Smart Estate">♡</button></div><div class="property-details"><div><p>LAND · IBEJU-LEKKI, LAGOS</p><h3>The Fairmont Green &amp; Smart Estate</h3><span>300 sqm &nbsp;·&nbsp; 500 sqm &nbsp;·&nbsp; C of O</span></div><strong>From ₦18M</strong></div></article>
           <article class="property-card" data-kind="land" data-location="lagos" data-budget="not-priced" data-slug="mbe" tabindex="0" role="link" aria-label="View Meridian Boulevard Estate details"><div class="property-photo"><img loading="lazy" decoding="async" src="../assets/images/mbe-1.webp" alt="Meridian Boulevard Estate" /><span class="status dark-status">Sold Out</span><button class="save-button" aria-label="Save Meridian Boulevard Estate">♡</button></div><div class="property-details"><div><p>LAND · OKUN-AJAH, OGOMBO, LAGOS</p><h3>Meridian Boulevard Estate</h3></div><strong>SALES CLOSED</strong></div></article>
           <article class="property-card" data-kind="land" data-location="ogun" data-budget="under-20" data-slug="qpe" tabindex="0" role="link" aria-label="View Queens Park Estate Phase 2 details"><div class="property-photo"><img loading="lazy" decoding="async" src="../assets/images/qpe-1.JPG" alt="Queens Park Estate Phase 2" /><button class="save-button" aria-label="Save Queens Park Estate Phase 2">♡</button></div><div class="property-details"><div><p>LAND · MOWE-OFADA, OGUN</p><h3>Queens Park Estate Phase 2</h3><span>Land &nbsp;·&nbsp; 600 sqm</span></div><strong>From ₦7.5M</strong></div></article>

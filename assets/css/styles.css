@@ -372,6 +372,7 @@ textarea {
 
 .hero-image img {
   width: min(100%, 700px);
+  height: auto;
   aspect-ratio: 1.08;
   object-fit: cover;
   border-radius: 28px 28px 34px 34px;

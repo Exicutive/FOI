@@ -1,3 +1,6 @@
+const siteFonts = document.querySelector<HTMLLinkElement>('#site-fonts');
+if (siteFonts?.media === 'print') siteFonts.media = 'all';
+
 const filters = document.querySelectorAll<HTMLButtonElement>('.filter');
 const cards = document.querySelectorAll<HTMLElement>('.property-card');
 const emptyState = document.querySelector<HTMLElement>('.empty-state');

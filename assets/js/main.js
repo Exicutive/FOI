@@ -1,4 +1,7 @@
 "use strict";
+const siteFonts = document.querySelector('#site-fonts');
+if (siteFonts?.media === 'print')
+    siteFonts.media = 'all';
 const filters = document.querySelectorAll('.filter');
 const cards = document.querySelectorAll('.property-card');
 const emptyState = document.querySelector('.empty-state');
