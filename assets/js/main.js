@@ -111,14 +111,14 @@ const propertyCollection = {
     'tmlse': {
         name: 'The Marbella Luxury & Smart Estate', type: 'Land', location: 'Lekki-Epe Expressway', price: 'From ₦86.5M', priceOptions: [['300 sqm', '₦86,500,000'], ['500 sqm', '₦109,500,000'], ['1,000 sqm · Commercial', '₦250,000,000']], status: 'AVAILABLE NOW',
         facts: ['Home', 'For Sale'],
-        description: 'The Marbella Luxury & Smart Estate offers premium living along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
+        description: 'The Marbella Luxury & Smart Estate is an estate land opportunity along the Lekki-Epe Expressway, combining modern amenities with a serene environment. Government-allocated land, represented as free from known encumbrances and adverse claims, makes Marbella a destination where luxury meets peace of mind.',
         amenities: ['24hr Security', 'Swimming Pool', 'Electricity', 'Perimeter Fencing', 'Shopping Mall', 'Good Drainage System'],
         summary: [['Type', 'Estate land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '1,000 sqm commercial'], ['Price', 'From ₦86.5M'], ['Location', 'Lekki-Epe Expressway']],
         images: ['../assets/images/tmlse-1.jpg', '../assets/images/tmlse-2.jpg', '../assets/images/tmlse-3.jpg']
     },
     'tfgse': {
         name: 'The Fairmont Green & Smart Estate', type: 'Land', location: 'Ibeju-Lekki, Lagos', price: 'From ₦18M', priceOptions: [['300 sqm', '₦18,000,000'], ['500 sqm', '₦30,000,000']], status: 'AVAILABLE NOW', facts: ['Home', 'For Sale', 'C of O'],
-        description: 'The estate is eco-friendly which is strategically located along the Lekki-Epe Expressway, opposite the proposed Lagos International Airport, the estate is surrounded by major economic and industrial developments, including Lekki Free Trade Zone, Lekki Deep Sea Port, Dangote Refinery and Petrochemicals, Pan-Atlantic University, Coscharis Group, and Alaro City.',
+        description: 'The Fairmont Green & Smart Estate is an eco-friendly land opportunity along the Lekki-Epe Expressway, opposite the proposed Lagos International Airport. The estate is surrounded by major economic and industrial developments, including Lekki Free Trade Zone, Lekki Deep Sea Port, Dangote Refinery and Petrochemicals, Pan-Atlantic University, Coscharis Group, and Alaro City.',
         amenities: ['EV charging port', 'Electricity', 'Solar Powered', 'Renewable Energy', 'Recreational centre', 'Motorable & Accessible Roads', 'Safe and Secured', 'Green Area'],
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Smallest plot', '300 sqm'], ['Largest plot', '500 sqm'], ['Location', 'Ibeju-Lekki, Lagos']],
         images: ['../assets/images/tfgse-1.JPG', '../assets/images/tfgse-2.JPG', '../assets/images/tfgse-3.webp']
@@ -145,7 +145,7 @@ const propertyCollection = {
     },
     'ctv': {
         name: 'Cityview Park & Resort', type: 'Land', location: 'Gousa District, Abuja', price: 'From ₦14M', priceOptions: [['200 sqm', '₦14,000,000'], ['300 sqm', '₦21,000,000'], ['500 sqm', '₦35,000,000'], ['1000 sqm - residential', '₦70,000,000'], ['1000 sqm - commercial', '₦150,000,000']], status: 'Available now', facts: ['Home', 'For Sale', 'FCDA', 'C of O'],
-        description: 'City View Park & Resort is a thoughtfully situated residential development in Gousa District, Abuja, designed for comfortable living in a calm and accessible environment. Its location offers a balance between residential tranquillity and everyday convenience, with key destinations such as the University of Abuja, Nnamdi Azikiwe International Airport, Idu Train Station, the Immigration Office, and the WAEC Office within reach. The estate presents an appealing setting for individuals and families seeking a well-connected place to call home.',
+        description: 'Cityview Park & Resort is a thoughtfully situated land development in Gousa District, Abuja, designed for comfortable living in a calm and accessible environment. Its location offers a balance between residential tranquillity and everyday convenience, with key destinations such as the University of Abuja, Nnamdi Azikiwe International Airport, Idu Train Station, the Immigration Office, and the WAEC Office within reach. The estate presents an appealing setting for individuals, families, and investors seeking a well-connected place to build or hold land.',
         amenities: ['Golf club', 'Helipad', 'Mini Golf course', 'Electric car charger port', 'Artificial Intelligence Hub', 'Recreational Centre', "Mini Polo Course"],
         summary: [['Type', 'Land'], ['Status', 'For sale'], ['Area', '200 sqm - Acres'], ['Smallest plot', '200 sqm'], ['Largest plot', '1,000 sqm commercial & Residential'], ['Location', 'Gousa District, Abuja']],
         images: ['../assets/images/ctv-1.jpg', '../assets/images/ctv-2.jpg', '../assets/images/ctv-3.jpg']
@@ -325,6 +325,7 @@ function renderPropertyDetail() {
     const title = `${property.name} in ${property.location} | FOI Developments`;
     syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], `/property/${encodeURIComponent(slug)}`);
     setText('property-name', property.name);
+    setText('property-breadcrumb-name', property.name);
     setText('property-type', property.type);
     setText('property-location', property.location);
     setText('property-price', property.price);
@@ -383,7 +384,7 @@ function renderPropertyDetail() {
         emailLink.href = `/contact?property=${encodeURIComponent(slug)}#contact-form`;
     const similar = document.getElementById('similar-properties');
     if (similar) {
-        similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}" tabindex="0" role="link" aria-label="View ${item.name} details"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name}" loading="lazy" decoding="async" /><button class="save-button" type="button" aria-label="Save ${item.name}">♡</button></div><div class="property-details"><div><p>${item.type}</p><h3>${item.name}</h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
+        similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}" tabindex="0" role="link" aria-label="View ${item.name} details"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name} property image" loading="lazy" decoding="async" /><button class="save-button" type="button" aria-label="Save ${item.name}">♡</button></div><div class="property-details"><div><p>${item.type}</p><h3><a href="${propertyHref(key)}">${item.name}</a></h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
         similar.querySelectorAll('.property-card').forEach((card) => {
             card.addEventListener('click', (event) => {
                 if (event.target.closest('button, a, input, select, textarea'))
@@ -440,9 +441,10 @@ function renderDevelopmentDetail() {
     const detailSlug = window.location.pathname.match(/^\/development\/([^/]+)\/?$/)?.[1];
     const slug = new URLSearchParams(window.location.search).get('phase') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'site-feasibility');
     const phase = developmentPhases[slug] ?? developmentPhases['site-feasibility'];
-    const title = `${phase.title} | Property Development Services | FOI Developments`;
+    const title = `${phase.phase} | Property Development Services | FOI Developments`;
     syncPageMetadata(title, phase.lead, phase.image, `/development/${encodeURIComponent(slug)}`);
     setText('development-phase', phase.phase);
+    setText('development-breadcrumb-name', phase.phase);
     setText('development-title', phase.title);
     setText('development-section-title', phase.sectionTitle);
     setText('development-lead', phase.lead);
