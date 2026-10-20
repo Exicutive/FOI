@@ -384,7 +384,7 @@ function renderPropertyDetail() {
         emailLink.href = `/contact?property=${encodeURIComponent(slug)}#contact-form`;
     const similar = document.getElementById('similar-properties');
     if (similar) {
-        similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}" tabindex="0" role="link" aria-label="View ${item.name} details"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name} property image" loading="lazy" decoding="async" /><button class="save-button" type="button" aria-label="Save ${item.name}">♡</button></div><div class="property-details"><div><p>${item.type}</p><h3><a href="${propertyHref(key)}">${item.name}</a></h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
+        similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name} property image" loading="lazy" decoding="async" /><button class="save-button" type="button" aria-label="Save ${item.name}">♡</button></div><div class="property-details"><div><p>${item.type}</p><h3><a href="${propertyHref(key)}">${item.name}</a></h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
         similar.querySelectorAll('.property-card').forEach((card) => {
             card.addEventListener('click', (event) => {
                 if (event.target.closest('button, a, input, select, textarea'))

@@ -1465,6 +1465,7 @@ textarea {
 
 .page-hero .lead {
   max-width: 720px;
+  color: var(--muted);
 }
 
 .story-layout,
