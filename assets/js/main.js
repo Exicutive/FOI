@@ -5,6 +5,51 @@ const emptyState = document.querySelector('.empty-state');
 const propertySearch = document.querySelector('#property-search');
 const searchSummary = document.querySelector('#search-summary');
 const siteOrigin = 'https://www.foidevs.com';
+const savedPropertiesStorageKey = 'foi-saved-properties';
+function getSavedProperties() {
+    try {
+        const stored = JSON.parse(window.localStorage.getItem(savedPropertiesStorageKey) ?? '[]');
+        return new Set(Array.isArray(stored) ? stored.filter((slug) => typeof slug === 'string') : []);
+    }
+    catch {
+        return new Set();
+    }
+}
+function saveProperties(savedProperties) {
+    try {
+        window.localStorage.setItem(savedPropertiesStorageKey, JSON.stringify([...savedProperties]));
+    }
+    catch {
+        // Saving is optional: the site remains usable when browser storage is unavailable.
+    }
+}
+let savedProperties = getSavedProperties();
+function propertySlugForSaveButton(button) {
+    return button.dataset.propertySlug ?? button.closest('.property-card[data-slug]')?.dataset.slug;
+}
+function syncSavedProperties() {
+    document.querySelectorAll('.save-button').forEach((button) => {
+        const slug = propertySlugForSaveButton(button);
+        const isSaved = Boolean(slug && savedProperties.has(slug));
+        const propertyName = button.dataset.propertyName ?? button.closest('.property-card')?.querySelector('h3')?.textContent?.trim() ?? 'this property';
+        button.classList.toggle('is-saved', isSaved);
+        button.textContent = isSaved ? '♥' : '♡';
+        button.setAttribute('aria-pressed', String(isSaved));
+        button.setAttribute('aria-label', `${isSaved ? 'Remove' : 'Save'} ${propertyName}`);
+        button.title = isSaved ? 'Remove from saved properties' : 'Save this property';
+    });
+    document.querySelectorAll('[data-saved-count]').forEach((element) => {
+        element.textContent = String(savedProperties.size);
+    });
+}
+function toggleSavedProperty(slug) {
+    if (savedProperties.has(slug))
+        savedProperties.delete(slug);
+    else
+        savedProperties.add(slug);
+    saveProperties(savedProperties);
+    syncSavedProperties();
+}
 function setVisibleProperties(matches) {
     let visible = 0;
     cards.forEach((card) => {
@@ -21,9 +66,9 @@ filters.forEach((filter) => filter.addEventListener('click', () => {
     filters.forEach((button) => button.classList.remove('active'));
     filter.classList.add('active');
     const type = filter.dataset.filter ?? 'all';
-    const visible = setVisibleProperties((card) => type === 'all' || card.dataset.kind === type);
+    const visible = setVisibleProperties((card) => type === 'all' || (type === 'saved' ? savedProperties.has(card.dataset.slug ?? '') : card.dataset.kind === type));
     if (searchSummary)
-        searchSummary.textContent = `Showing ${visible} selected opportunit${visible === 1 ? 'y' : 'ies'}`;
+        searchSummary.textContent = type === 'saved' && visible === 0 ? 'You have not saved any properties yet.' : `Showing ${visible} selected opportunit${visible === 1 ? 'y' : 'ies'}`;
 }));
 if (propertySearch) {
     propertySearch.addEventListener('submit', (event) => {
@@ -43,12 +88,21 @@ if (propertySearch) {
         document.querySelector('#listings')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 }
-document.querySelectorAll('.save-button').forEach((button) => {
-    button.addEventListener('click', (event) => {
-        event.stopPropagation();
-        button.classList.toggle('is-saved');
-        button.textContent = button.classList.contains('is-saved') ? '♥' : '♡';
-    });
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('.save-button');
+    if (!button)
+        return;
+    event.preventDefault();
+    event.stopPropagation();
+    const slug = propertySlugForSaveButton(button);
+    if (slug)
+        toggleSavedProperty(slug);
+});
+window.addEventListener('storage', (event) => {
+    if (event.key !== savedPropertiesStorageKey)
+        return;
+    savedProperties = getSavedProperties();
+    syncSavedProperties();
 });
 const propertyCollection = {
     'tmlse': {
@@ -109,6 +163,8 @@ document.querySelectorAll('.property-card[data-slug]').forEach((card) => {
         openProperty(card);
     });
     card.addEventListener('keydown', (event) => {
+        if (event.target.closest('button, a, input, select, textarea'))
+            return;
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             openProperty(card);
@@ -269,6 +325,11 @@ function renderPropertyDetail() {
     setText('property-price', property.price);
     setText('property-status', property.status);
     setText('property-description', property.description);
+    const detailSave = document.querySelector('.detail-save');
+    if (detailSave) {
+        detailSave.dataset.propertySlug = slug;
+        detailSave.dataset.propertyName = property.name;
+    }
     const facts = document.getElementById('property-facts');
     if (facts)
         facts.innerHTML = property.facts.map((fact) => `<span>${fact}</span>`).join('');
@@ -311,18 +372,28 @@ function renderPropertyDetail() {
         whatsapp.href = `https://wa.me/2348138582155?text=${encodeURIComponent(`Hello FOI, I’m interested in ${property.name}.`)}`;
     const similar = document.getElementById('similar-properties');
     if (similar) {
-        similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}" tabindex="0" role="link" aria-label="View ${item.name} details"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name}" loading="lazy" decoding="async" /></div><div class="property-details"><div><p>${item.type}</p><h3>${item.name}</h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
+        similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}" tabindex="0" role="link" aria-label="View ${item.name} details"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name}" loading="lazy" decoding="async" /><button class="save-button" type="button" aria-label="Save ${item.name}">♡</button></div><div class="property-details"><div><p>${item.type}</p><h3>${item.name}</h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
         similar.querySelectorAll('.property-card').forEach((card) => {
-            card.addEventListener('click', () => openProperty(card));
-            card.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
+            card.addEventListener('click', (event) => {
+                if (event.target.closest('button, a, input, select, textarea'))
+                    return;
                 openProperty(card);
-            } });
+            });
+            card.addEventListener('keydown', (event) => {
+                if (event.target.closest('button, a, input, select, textarea'))
+                    return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openProperty(card);
+                }
+            });
         });
     }
+    syncSavedProperties();
     page.setAttribute('aria-busy', 'false');
 }
 renderPropertyDetail();
+syncSavedProperties();
 const developmentPhases = {
     'site-feasibility': {
         phase: 'Site & feasibility', title: 'Start with the site.', sectionTitle: 'Clarity before commitment.',
