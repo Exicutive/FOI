@@ -316,8 +316,9 @@ function renderPropertyDetail() {
     if (!page)
         return;
     const detailSlug = window.location.pathname.match(/^\/property\/([^/]+)\/?$/)?.[1];
-    const slug = new URLSearchParams(window.location.search).get('property') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'tmlse');
-    const property = propertyCollection[slug] ?? propertyCollection['tmlse'];
+    const requestedSlug = new URLSearchParams(window.location.search).get('property') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'tmlse');
+    const slug = propertyCollection[requestedSlug] ? requestedSlug : 'tmlse';
+    const property = propertyCollection[slug];
     const title = `${property.name} in ${property.location} | FOI Developments`;
     syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], `/property/${encodeURIComponent(slug)}`);
     setText('property-name', property.name);
@@ -370,7 +371,10 @@ function renderPropertyDetail() {
     document.querySelector('.gallery-next')?.addEventListener('click', () => showImage(activeImage + 1));
     const whatsapp = document.getElementById('whatsapp-link');
     if (whatsapp)
-        whatsapp.href = `https://wa.me/2348138582155?text=${encodeURIComponent(`Hello FOI, I’m interested in ${property.name}.`)}`;
+        whatsapp.href = `https://wa.me/2348138582155?text=${encodeURIComponent(`Hello FOI, I’m interested in ${property.name} (reference: ${slug}).`)}`;
+    const emailLink = document.getElementById('email-link');
+    if (emailLink)
+        emailLink.href = `/contact?property=${encodeURIComponent(slug)}#contact-form`;
     const similar = document.getElementById('similar-properties');
     if (similar) {
         similar.innerHTML = Object.entries(propertyCollection).filter(([key]) => key !== slug).slice(0, 3).map(([key, item]) => `<article class="property-card similar-card" data-slug="${key}" tabindex="0" role="link" aria-label="View ${item.name} details"><div class="property-photo"><img src="${item.images[0]}" alt="${item.name}" loading="lazy" decoding="async" /><button class="save-button" type="button" aria-label="Save ${item.name}">♡</button></div><div class="property-details"><div><p>${item.type}</p><h3>${item.name}</h3><span>${item.facts.join(' · ')}</span></div><strong>${item.price}</strong></div></article>`).join('');
@@ -481,15 +485,59 @@ if (menuToggle && mobileNav) {
     });
 }
 const enquiryForm = document.querySelector('.enquiry-form');
+function setFormMessage(message, text, state) {
+    if (!message)
+        return;
+    message.textContent = text;
+    message.dataset.state = state;
+}
+function preparePropertyEnquiry(form) {
+    const propertyId = new URLSearchParams(window.location.search).get('property');
+    const property = propertyId ? propertyCollection[propertyId] : undefined;
+    if (!property || !propertyId)
+        return;
+    form.dataset.propertyId = propertyId;
+    form.dataset.propertyName = property.name;
+    const note = document.getElementById('property-enquiry-note');
+    if (note) {
+        note.textContent = `Enquiry for: ${property.name}`;
+        note.hidden = false;
+    }
+    const interest = form.elements.namedItem('interest');
+    if (interest)
+        interest.value = 'Buying a property';
+}
+function contactFormValidationError(form) {
+    const name = form.elements.namedItem('name');
+    const email = form.elements.namedItem('email');
+    if (!name || !name.value.trim())
+        return name ? { field: name, message: 'Please enter your full name.' } : undefined;
+    if (!email || !email.value.trim() || !email.validity.valid)
+        return email ? { field: email, message: 'Please enter a valid email address.' } : undefined;
+    return undefined;
+}
 if (enquiryForm) {
+    preparePropertyEnquiry(enquiryForm);
+    enquiryForm.addEventListener('invalid', (event) => {
+        const invalidField = event.target;
+        const message = enquiryForm.querySelector('.form-message');
+        setFormMessage(message, invalidField.name === 'email' ? 'Please enter a valid email address.' : 'Please complete the required fields.', 'error');
+    }, true);
     enquiryForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const message = enquiryForm.querySelector('.form-message');
         const submitButton = enquiryForm.querySelector('button[type="submit"]');
         const endpoint = enquiryForm.dataset.crmEndpoint?.trim();
+        if (submitButton?.disabled)
+            return;
+        const validationError = contactFormValidationError(enquiryForm);
+        if (validationError) {
+            setFormMessage(message, validationError.message, 'error');
+            validationError.field.focus();
+            return;
+        }
         if (!endpoint) {
-            if (message)
-                message.textContent = 'The contact form is being set up. Please call or email us directly.';
+            setFormMessage(message, 'The contact form is being set up. Please call or email us directly.', 'error');
             return;
         }
         const formData = new FormData(enquiryForm);
@@ -503,9 +551,10 @@ if (enquiryForm) {
             website: valueFor('website'),
             source: 'Website contact form',
             page: `${window.location.origin}${window.location.pathname}`,
+            propertyId: enquiryForm.dataset.propertyId ?? '',
+            propertyName: enquiryForm.dataset.propertyName ?? '',
         };
-        if (message)
-            message.textContent = 'Sending your message…';
+        setFormMessage(message, 'Sending your message…', 'sending');
         if (submitButton)
             submitButton.disabled = true;
         try {
@@ -515,13 +564,11 @@ if (enquiryForm) {
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(payload),
             });
-            if (message)
-                message.textContent = 'Thank you. A FOI advisor will be in touch shortly.';
+            setFormMessage(message, 'Thank you. Your message has been sent and a FOI advisor will be in touch shortly.', 'success');
             enquiryForm.reset();
         }
         catch {
-            if (message)
-                message.textContent = 'We could not send your message. Please try again or contact us directly.';
+            setFormMessage(message, 'We could not send your message. Please try again or contact us directly.', 'error');
         }
         finally {
             if (submitButton)

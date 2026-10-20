@@ -1138,6 +1138,10 @@ textarea {
   font: 600 12px var(--sans);
 }
 
+.form-message[data-state="error"] { color: #b42318; }
+.form-message[data-state="success"] { color: #087443; }
+.form-message[data-state="sending"] { color: var(--blue-strong); }
+
 .site-footer {
   padding: 36px 0 16px;
   border: 0;
@@ -2321,6 +2325,7 @@ textarea {
 
 .contact-form-panel { padding: 36px; background: #fff; border: 1px solid rgba(12,33,71,.1); box-shadow: 0 22px 52px rgba(13,40,86,.12); }
 .contact-form-panel h2 { margin-bottom: 32px; }
+.property-enquiry-note { margin: -16px 0 24px; color: var(--blue-strong); font: 700 10px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .modern-contact-form { gap: 17px; }
 .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .modern-contact-form input, .modern-contact-form select, .modern-contact-form textarea { background: #f6f9fe; border-color: rgba(12,33,71,.13); border-radius: 2px; }

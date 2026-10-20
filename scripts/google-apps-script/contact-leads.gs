@@ -11,6 +11,8 @@ const LEAD_HEADERS = [
   'Source',
   'Page',
   'Status',
+  'Property reference',
+  'Property',
 ];
 
 function doGet() {
@@ -40,6 +42,8 @@ function doPost(event) {
         safeSheetValue_(lead.source || 'Website contact form'),
         safeSheetValue_(lead.page),
         'New',
+        safeSheetValue_(lead.propertyId),
+        safeSheetValue_(lead.propertyName),
       ]);
     } finally {
       lock.releaseLock();
@@ -55,11 +59,14 @@ function getLeadsSheet_() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = spreadsheet.getSheetByName(LEADS_SHEET_NAME);
 
-  if (!sheet) {
-    sheet = spreadsheet.insertSheet(LEADS_SHEET_NAME);
-    sheet.getRange(1, 1, 1, LEAD_HEADERS.length).setValues([LEAD_HEADERS]);
+  if (!sheet) sheet = spreadsheet.insertSheet(LEADS_SHEET_NAME);
+
+  const headerRange = sheet.getRange(1, 1, 1, LEAD_HEADERS.length);
+  const currentHeaders = headerRange.getValues()[0];
+  if (currentHeaders.some((header, index) => header !== LEAD_HEADERS[index])) {
+    headerRange.setValues([LEAD_HEADERS]);
     sheet.setFrozenRows(1);
-    sheet.getRange(1, 1, 1, LEAD_HEADERS.length)
+    headerRange
       .setFontWeight('bold')
       .setBackground('#0c295a')
       .setFontColor('#ffffff');
@@ -81,6 +88,8 @@ function parseLead_(event) {
     source: clean_(data.source, 120),
     page: clean_(data.page, 500),
     website: clean_(data.website, 200),
+    propertyId: clean_(data.propertyId, 64),
+    propertyName: clean_(data.propertyName, 200),
   };
 }
 
