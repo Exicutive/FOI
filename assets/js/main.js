@@ -358,13 +358,16 @@ function renderPropertyDetail() {
     const showImage = (index) => {
         activeImage = (index + property.images.length) % property.images.length;
         if (image) {
+            image.loading = 'eager';
+            image.decoding = 'async';
+            image.fetchPriority = activeImage === 0 ? 'high' : 'auto';
             image.src = property.images[activeImage];
             image.alt = `${property.name} — image ${activeImage + 1}`;
         }
         thumbnails?.querySelectorAll('button').forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === activeImage));
     };
     if (thumbnails) {
-        thumbnails.innerHTML = property.images.map((src, index) => `<button type="button" aria-label="View image ${index + 1}"><img src="${src}" alt="" /></button>`).join('');
+        thumbnails.innerHTML = property.images.map((src, index) => `<button type="button" aria-label="View image ${index + 1}"><img src="${src}" alt="" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async" /></button>`).join('');
         thumbnails.querySelectorAll('button').forEach((button, index) => button.addEventListener('click', () => showImage(index)));
     }
     showImage(0);
@@ -443,6 +446,9 @@ function renderDevelopmentDetail() {
     setText('development-body', phase.body);
     const image = document.getElementById('development-image');
     if (image) {
+        image.loading = 'eager';
+        image.decoding = 'async';
+        image.fetchPriority = 'high';
         image.src = phase.image;
         image.alt = phase.title;
     }

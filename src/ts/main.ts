@@ -379,11 +379,17 @@ function renderPropertyDetail(): void {
   let activeImage = 0;
   const showImage = (index: number): void => {
     activeImage = (index + property.images.length) % property.images.length;
-    if (image) { image.src = property.images[activeImage]; image.alt = `${property.name} — image ${activeImage + 1}`; }
+    if (image) {
+      image.loading = 'eager';
+      image.decoding = 'async';
+      image.fetchPriority = activeImage === 0 ? 'high' : 'auto';
+      image.src = property.images[activeImage];
+      image.alt = `${property.name} — image ${activeImage + 1}`;
+    }
     thumbnails?.querySelectorAll<HTMLButtonElement>('button').forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === activeImage));
   };
   if (thumbnails) {
-    thumbnails.innerHTML = property.images.map((src, index) => `<button type="button" aria-label="View image ${index + 1}"><img src="${src}" alt="" /></button>`).join('');
+    thumbnails.innerHTML = property.images.map((src, index) => `<button type="button" aria-label="View image ${index + 1}"><img src="${src}" alt="" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async" /></button>`).join('');
     thumbnails.querySelectorAll<HTMLButtonElement>('button').forEach((button, index) => button.addEventListener('click', () => showImage(index)));
   }
   showImage(0);
@@ -468,7 +474,13 @@ function renderDevelopmentDetail(): void {
   setText('development-lead', phase.lead);
   setText('development-body', phase.body);
   const image = document.getElementById('development-image') as HTMLImageElement | null;
-  if (image) { image.src = phase.image; image.alt = phase.title; }
+  if (image) {
+    image.loading = 'eager';
+    image.decoding = 'async';
+    image.fetchPriority = 'high';
+    image.src = phase.image;
+    image.alt = phase.title;
+  }
   const deliverables = document.getElementById('development-deliverables-list');
   if (deliverables) deliverables.innerHTML = phase.deliverables.map((item) => `<li>${item}</li>`).join('');
   const steps = document.getElementById('development-steps');
