@@ -1,4 +1,6 @@
 const LEADS_SHEET_NAME = 'Website Leads';
+const RATE_LIMIT_WINDOW_SECONDS = 600;
+const MAX_LEADS_PER_WINDOW = 3;
 const LEAD_HEADERS = [
   'Received at',
   'Name',
@@ -21,7 +23,8 @@ function doPost(event) {
 
     // Silent success for bots that fill the hidden field.
     if (lead.website) return response_({ ok: true });
-    if (!lead.name || !lead.email) return response_({ ok: false, error: 'Name and email are required.' });
+    if (!lead.name || !isValidEmail_(lead.email)) return response_({ ok: false, error: 'A name and valid email are required.' });
+    if (isRateLimited_(lead)) return response_({ ok: false, error: 'Please wait a few minutes before sending another message.' });
 
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
@@ -29,13 +32,13 @@ function doPost(event) {
       const sheet = getLeadsSheet_();
       sheet.appendRow([
         new Date(),
-        lead.name,
-        lead.email,
-        lead.phone,
-        lead.interest,
-        lead.message,
-        lead.source || 'Website contact form',
-        lead.page,
+        safeSheetValue_(lead.name),
+        safeSheetValue_(lead.email),
+        safeSheetValue_(lead.phone),
+        safeSheetValue_(lead.interest),
+        safeSheetValue_(lead.message),
+        safeSheetValue_(lead.source || 'Website contact form'),
+        safeSheetValue_(lead.page),
         'New',
       ]);
     } finally {
@@ -44,7 +47,6 @@ function doPost(event) {
 
     return response_({ ok: true });
   } catch (error) {
-    console.error(error);
     return response_({ ok: false, error: 'Unable to save lead.' });
   }
 }
@@ -84,6 +86,28 @@ function parseLead_(event) {
 
 function clean_(value, maxLength) {
   return String(value || '').trim().slice(0, maxLength);
+}
+
+function isValidEmail_(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isRateLimited_(lead) {
+  const fingerprint = Utilities.computeDigest(
+    Utilities.DigestAlgorithm.SHA_256,
+    `${lead.email.toLowerCase()}|${lead.phone}`,
+  ).map((byte) => (byte + 256).toString(16).slice(-2)).join('');
+  const cache = CacheService.getScriptCache();
+  const cacheKey = `lead-rate:${fingerprint}`;
+  const attempts = Number(cache.get(cacheKey) || '0');
+  if (attempts >= MAX_LEADS_PER_WINDOW) return true;
+  cache.put(cacheKey, String(attempts + 1), RATE_LIMIT_WINDOW_SECONDS);
+  return false;
+}
+
+function safeSheetValue_(value) {
+  // Prevent spreadsheet formula execution from untrusted form input.
+  return /^[=+\-@]/.test(value) ? `'${value}` : value;
 }
 
 function response_(payload) {

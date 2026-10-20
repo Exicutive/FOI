@@ -518,12 +518,17 @@ if (enquiryForm) {
     }
 
     const formData = new FormData(enquiryForm);
-    const payload: Record<string, string> = {};
-    formData.forEach((value, key) => {
-      payload[key] = typeof value === 'string' ? value : value.name;
-    });
-    payload.source = 'Website contact form';
-    payload.page = window.location.href;
+    const valueFor = (name: string): string => String(formData.get(name) ?? '').trim();
+    const payload = {
+      name: valueFor('name'),
+      email: valueFor('email'),
+      phone: valueFor('phone'),
+      interest: valueFor('interest'),
+      message: valueFor('message'),
+      website: valueFor('website'),
+      source: 'Website contact form',
+      page: `${window.location.origin}${window.location.pathname}`,
+    };
 
     if (message) message.textContent = 'Sending your message…';
     if (submitButton) submitButton.disabled = true;

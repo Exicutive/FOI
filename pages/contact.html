@@ -67,9 +67,9 @@
       <section class="contact-form-panel" id="contact-form" aria-labelledby="contact-form-title">
         <h2 id="contact-form-title">What can we help<br />you <em>move?</em></h2>
         <form class="enquiry-form modern-contact-form" data-crm-endpoint="https://script.google.com/macros/s/AKfycbwpARBtOx9zQ1C9hTJkl-pcTCk7dSEGtGoeUWSyU--ejhUtknaC2rLqn0RErSfcbX2v/exec">
-          <div class="form-row"><label>Full name<input required name="name" autocomplete="name" placeholder="Your name" /></label><label>Email address<input required type="email" name="email" autocomplete="email" placeholder="you@email.com" /></label></div>
-          <div class="form-row"><label>Phone number<input name="phone" type="tel" autocomplete="tel" placeholder="+234" /></label><label>How can we help?<select name="interest"><option>Buying a property</option><option>Selling a property</option><option>Investment advisory</option><option>Development services</option><option>Something else</option></select></label></div>
-          <label>Tell us a little more<textarea name="message" placeholder="Share your plans, preferred location, or the opportunity you have in mind."></textarea></label>
+          <div class="form-row"><label>Full name<input required name="name" autocomplete="name" maxlength="120" placeholder="Your name" /></label><label>Email address<input required type="email" name="email" autocomplete="email" maxlength="160" placeholder="you@email.com" /></label></div>
+          <div class="form-row"><label>Phone number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="60" placeholder="+234" /></label><label>How can we help?<select name="interest"><option>Buying a property</option><option>Selling a property</option><option>Investment advisory</option><option>Development services</option><option>Something else</option></select></label></div>
+          <label>Tell us a little more<textarea name="message" maxlength="2000" placeholder="Share your plans, preferred location, or the opportunity you have in mind."></textarea></label>
           <label class="form-honeypot" aria-hidden="true">Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
           <div class="form-submit-row"><button class="primary-button" type="submit">Send message <b>↗</b></button><small>We usually respond within one business day.</small></div><p class="form-message" role="status"></p>
         </form>
