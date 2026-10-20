@@ -40,12 +40,12 @@ services:
       - type: redirect
         source: /pages/properties.html
         destination: /properties
-      - type: rewrite
+      - type: redirect
         source: /pages/property.html
-        destination: /_internal/pages/property.html
-      - type: rewrite
+        destination: /properties
+      - type: redirect
         source: /pages/development-detail.html
-        destination: /_internal/pages/development-detail.html
+        destination: /development
       - type: rewrite
         source: /about
         destination: /_internal/pages/about.html
@@ -58,6 +58,33 @@ services:
       - type: rewrite
         source: /properties
         destination: /_internal/pages/properties.html
+      - type: rewrite
+        source: /property/tmlse
+        destination: /_internal/pages/property-tmlse.html
+      - type: rewrite
+        source: /property/tfgse
+        destination: /_internal/pages/property-tfgse.html
+      - type: rewrite
+        source: /property/mbe
+        destination: /_internal/pages/property-mbe.html
+      - type: rewrite
+        source: /property/qpe
+        destination: /_internal/pages/property-qpe.html
+      - type: rewrite
+        source: /property/oge
+        destination: /_internal/pages/property-oge.html
+      - type: rewrite
+        source: /property/ctv
+        destination: /_internal/pages/property-ctv.html
+      - type: rewrite
+        source: /development/site-feasibility
+        destination: /_internal/pages/development-site-feasibility.html
+      - type: rewrite
+        source: /development/design-approvals
+        destination: /_internal/pages/development-design-approvals.html
+      - type: rewrite
+        source: /development/construction-handover
+        destination: /_internal/pages/development-construction-handover.html
       - type: rewrite
         source: /property/:slug
         destination: /_internal/pages/property.html

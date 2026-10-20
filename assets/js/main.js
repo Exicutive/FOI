@@ -218,11 +218,11 @@ function pageSchemaType() {
     };
     return pageTypes[normalizedPath] ?? 'WebPage';
 }
-function syncStructuredData(title, description, canonicalUrl) {
-    const agentId = `${siteOrigin}/#real-estate-agent`;
+function syncStructuredData(title, description, canonicalUrl, breadcrumbs = []) {
+    const agentId = `${siteOrigin}/#organization`;
     const websiteId = `${siteOrigin}/#website`;
     const business = {
-        '@type': 'RealEstateAgent',
+        '@type': 'Organization',
         '@id': agentId,
         name: 'FOI Developments',
         legalName: 'FOI Developments Ltd',
@@ -250,20 +250,6 @@ function syncStructuredData(title, description, canonicalUrl) {
             latitude: 6.472829393518931,
             longitude: 3.6009813745294896,
         },
-        openingHoursSpecification: [{
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: [
-                    'https://schema.org/Monday',
-                    'https://schema.org/Tuesday',
-                    'https://schema.org/Wednesday',
-                    'https://schema.org/Thursday',
-                    'https://schema.org/Friday',
-                    'https://schema.org/Saturday',
-                    'https://schema.org/Sunday',
-                ],
-                opens: '00:00',
-                closes: '23:59',
-            }],
     };
     const data = {
         '@context': 'https://schema.org',
@@ -271,6 +257,16 @@ function syncStructuredData(title, description, canonicalUrl) {
             business,
             { '@type': 'WebSite', '@id': websiteId, url: `${siteOrigin}/`, name: 'FOI Developments', publisher: { '@id': agentId } },
             { '@type': pageSchemaType(), '@id': `${canonicalUrl}#webpage`, url: canonicalUrl, name: title, description, isPartOf: { '@id': websiteId }, about: { '@id': agentId } },
+            ...(breadcrumbs.length ? [{
+                    '@type': 'BreadcrumbList',
+                    '@id': `${canonicalUrl}#breadcrumb`,
+                    itemListElement: breadcrumbs.map((breadcrumb, index) => ({
+                        '@type': 'ListItem',
+                        position: index + 1,
+                        name: breadcrumb.name,
+                        ...(breadcrumb.url ? { item: new URL(breadcrumb.url, siteOrigin).href } : {}),
+                    })),
+                }] : []),
         ],
     };
     let script = document.getElementById('seo-structured-data');
@@ -282,7 +278,7 @@ function syncStructuredData(title, description, canonicalUrl) {
     }
     script.textContent = JSON.stringify(data);
 }
-function syncPageMetadata(title, description, image, cleanPath) {
+function syncPageMetadata(title, description, image, cleanPath, breadcrumbs = []) {
     const shortDescription = shortenDescription(description);
     const canonicalUrl = canonicalPageUrl(cleanPath);
     const imageUrl = image ? new URL(image, siteOrigin).href : undefined;
@@ -309,7 +305,7 @@ function syncPageMetadata(title, description, image, cleanPath) {
             document.head.append(canonical);
         }
         canonical.href = canonicalUrl;
-        syncStructuredData(title, shortDescription, canonicalUrl);
+        syncStructuredData(title, shortDescription, canonicalUrl, breadcrumbs);
     }
 }
 const initialDescription = document.querySelector('meta[name="description"]')?.content ?? '';
@@ -323,7 +319,11 @@ function renderPropertyDetail() {
     const slug = propertyCollection[requestedSlug] ? requestedSlug : 'tmlse';
     const property = propertyCollection[slug];
     const title = `${property.name} in ${property.location} | FOI Developments`;
-    syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], `/property/${encodeURIComponent(slug)}`);
+    syncPageMetadata(title, `${property.name} in ${property.location}. ${property.description}`, property.images[0], `/property/${encodeURIComponent(slug)}`, [
+        { name: 'Home', url: '/' },
+        { name: 'Properties', url: '/properties' },
+        { name: property.name },
+    ]);
     setText('property-name', property.name);
     setText('property-breadcrumb-name', property.name);
     setText('property-type', property.type);
@@ -442,7 +442,11 @@ function renderDevelopmentDetail() {
     const slug = new URLSearchParams(window.location.search).get('phase') ?? (detailSlug ? decodeURIComponent(detailSlug) : 'site-feasibility');
     const phase = developmentPhases[slug] ?? developmentPhases['site-feasibility'];
     const title = `${phase.phase} | Property Development Services | FOI Developments`;
-    syncPageMetadata(title, phase.lead, phase.image, `/development/${encodeURIComponent(slug)}`);
+    syncPageMetadata(title, phase.lead, phase.image, `/development/${encodeURIComponent(slug)}`, [
+        { name: 'Home', url: '/' },
+        { name: 'Development services', url: '/development' },
+        { name: phase.phase },
+    ]);
     setText('development-phase', phase.phase);
     setText('development-breadcrumb-name', phase.phase);
     setText('development-title', phase.title);
