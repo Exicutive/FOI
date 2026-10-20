@@ -4,9 +4,10 @@ if (siteFonts?.media === 'print')
     siteFonts.media = 'all';
 const filters = document.querySelectorAll('.filter');
 const cards = document.querySelectorAll('.property-card');
-const emptyState = document.querySelector('.empty-state');
+const emptyState = document.querySelector('#empty-state');
 const propertySearch = document.querySelector('#property-search');
 const searchSummary = document.querySelector('#search-summary');
+const activeFilters = document.querySelector('#active-filters');
 const siteOrigin = 'https://www.foidevs.com';
 const savedPropertiesStorageKey = 'foi-saved-properties';
 function getSavedProperties() {
@@ -52,45 +53,196 @@ function toggleSavedProperty(slug) {
         savedProperties.add(slug);
     saveProperties(savedProperties);
     syncSavedProperties();
+    applyPropertyFilters(false);
 }
-function setVisibleProperties(matches) {
+function fieldValue(name) {
+    const field = propertySearch?.elements.namedItem(name);
+    return field instanceof HTMLInputElement || field instanceof HTMLSelectElement ? field.value : 'all';
+}
+function setFieldValue(name, value) {
+    const field = propertySearch?.elements.namedItem(name);
+    if (field instanceof HTMLInputElement)
+        field.value = value;
+    if (field instanceof HTMLSelectElement) {
+        field.value = Array.from(field.options).some((option) => option.value === value) ? value : 'all';
+    }
+}
+function filterStateFromForm() {
+    return {
+        query: fieldValue('q').trim(),
+        location: fieldValue('location'),
+        type: fieldValue('type'),
+        budget: fieldValue('budget'),
+        development: fieldValue('development'),
+        availability: fieldValue('availability'),
+        saved: new URLSearchParams(window.location.search).get('saved') === '1',
+    };
+}
+function filterStateFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        query: params.get('q')?.trim() ?? '',
+        location: params.get('location') ?? 'all',
+        type: params.get('type') ?? 'all',
+        budget: params.get('budget') ?? 'all',
+        development: params.get('development') ?? 'all',
+        availability: params.get('availability') ?? 'all',
+        saved: params.get('saved') === '1',
+    };
+}
+function setFormFromFilterState(state) {
+    setFieldValue('q', state.query);
+    setFieldValue('location', state.location);
+    setFieldValue('type', state.type);
+    setFieldValue('budget', state.budget);
+    setFieldValue('development', state.development);
+    setFieldValue('availability', state.availability);
+}
+function syncFilterUrl(state) {
+    const params = new URLSearchParams();
+    if (state.query)
+        params.set('q', state.query);
+    ['location', 'type', 'budget', 'development', 'availability'].forEach((key) => {
+        if (state[key] !== 'all')
+            params.set(key, state[key]);
+    });
+    if (state.saved)
+        params.set('saved', '1');
+    const query = params.toString();
+    window.history.pushState(null, '', `${window.location.pathname}${query ? `?${query}` : ''}`);
+}
+function optionLabel(name, value) {
+    const field = propertySearch?.elements.namedItem(name);
+    if (field instanceof HTMLSelectElement)
+        return field.selectedOptions[0]?.textContent?.trim() ?? value;
+    return value;
+}
+function renderActiveFilters(state) {
+    if (!activeFilters)
+        return;
+    activeFilters.replaceChildren();
+    const entries = [];
+    if (state.query)
+        entries.push(['q', `Search: ${state.query}`, '']);
+    ['location', 'type', 'budget', 'development', 'availability'].forEach((key) => {
+        if (state[key] !== 'all')
+            entries.push([key, optionLabel(key, state[key]), 'all']);
+    });
+    if (state.saved)
+        entries.push(['saved', 'Saved properties', '0']);
+    entries.forEach(([key, label, value]) => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'filter-chip';
+        chip.dataset.clearFilter = key;
+        chip.dataset.clearValue = value;
+        chip.setAttribute('aria-label', `Remove ${label} filter`);
+        chip.textContent = `${label} ×`;
+        activeFilters.append(chip);
+    });
+    activeFilters.hidden = entries.length === 0;
+}
+function syncQuickFilters(state) {
+    filters.forEach((button) => {
+        const filter = button.dataset.filter ?? 'all';
+        const active = filter === 'saved' ? state.saved : filter === 'all' ? !state.saved && state.type === 'all' : !state.saved && state.type === filter;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+    });
+}
+function applyPropertyFilters(updateUrl) {
+    if (!propertySearch || !cards.length)
+        return;
+    const state = filterStateFromForm();
+    const query = state.query.toLocaleLowerCase();
     let visible = 0;
     cards.forEach((card) => {
-        const show = matches(card);
+        const property = propertyCollection[card.dataset.slug ?? ''];
+        const searchableText = [
+            card.textContent,
+            property?.description,
+            property?.location,
+            property?.facts.join(' '),
+            property?.amenities.join(' '),
+            property?.summary?.flat().join(' '),
+        ].filter(Boolean).join(' ').toLocaleLowerCase();
+        const show = (!query || searchableText.includes(query)) &&
+            (state.location === 'all' || card.dataset.location === state.location) &&
+            (state.type === 'all' || card.dataset.kind === state.type) &&
+            (state.budget === 'all' || card.dataset.budget === state.budget) &&
+            (state.development === 'all' || card.dataset.slug === state.development) &&
+            (state.availability === 'all' || card.dataset.availability === state.availability) &&
+            (!state.saved || savedProperties.has(card.dataset.slug ?? ''));
         card.classList.toggle('is-hidden', !show);
         if (show)
             visible += 1;
     });
     if (emptyState)
         emptyState.hidden = visible > 0;
-    return visible;
+    if (searchSummary) {
+        searchSummary.textContent = state.saved && visible === 0
+            ? 'No saved properties match these filters.'
+            : visible ? `Showing ${visible} ${visible === 1 ? 'opportunity' : 'opportunities'}` : 'No properties match those filters.';
+    }
+    syncQuickFilters(state);
+    renderActiveFilters(state);
+    if (updateUrl)
+        syncFilterUrl(state);
 }
-filters.forEach((filter) => filter.addEventListener('click', () => {
-    filters.forEach((button) => button.classList.remove('active'));
-    filter.classList.add('active');
-    const type = filter.dataset.filter ?? 'all';
-    const visible = setVisibleProperties((card) => type === 'all' || (type === 'saved' ? savedProperties.has(card.dataset.slug ?? '') : card.dataset.kind === type));
-    if (searchSummary)
-        searchSummary.textContent = type === 'saved' && visible === 0 ? 'You have not saved any properties yet.' : `Showing ${visible} selected opportunit${visible === 1 ? 'y' : 'ies'}`;
-}));
 if (propertySearch) {
     propertySearch.addEventListener('submit', (event) => {
         event.preventDefault();
-        const form = new FormData(propertySearch);
-        const location = String(form.get('location') ?? 'all');
-        const type = String(form.get('type') ?? 'all');
-        const budget = String(form.get('budget') ?? 'all');
-        const visible = setVisibleProperties((card) => (location === 'all' || card.dataset.location === location) &&
-            (type === 'all' || card.dataset.kind === type) &&
-            (budget === 'all' || card.dataset.budget === budget));
-        filters.forEach((button) => button.classList.toggle('active', type !== 'all' && button.dataset.filter === type));
-        if (type === 'all')
-            filters.forEach((button) => button.classList.toggle('active', button.dataset.filter === 'all'));
-        if (searchSummary)
-            searchSummary.textContent = visible ? `Showing ${visible} matching opportunit${visible === 1 ? 'y' : 'ies'}` : 'No exact matches — an advisor can help source the right opportunity.';
+        applyPropertyFilters(true);
         document.querySelector('#listings')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+    propertySearch.addEventListener('change', () => applyPropertyFilters(true));
+    propertySearch.addEventListener('reset', () => {
+        window.history.replaceState(null, '', window.location.pathname);
+        window.setTimeout(() => applyPropertyFilters(false));
+    });
 }
+filters.forEach((filter) => filter.addEventListener('click', () => {
+    if (!propertySearch)
+        return;
+    const selected = filter.dataset.filter ?? 'all';
+    const state = filterStateFromForm();
+    if (selected === 'saved') {
+        state.saved = !state.saved;
+    }
+    else {
+        state.saved = false;
+        state.type = selected === 'all' ? 'all' : selected;
+    }
+    setFormFromFilterState(state);
+    const params = new URLSearchParams(window.location.search);
+    if (state.saved)
+        params.set('saved', '1');
+    else
+        params.delete('saved');
+    window.history.replaceState(null, '', `${window.location.pathname}${params.toString() ? `?${params}` : ''}`);
+    applyPropertyFilters(true);
+}));
+activeFilters?.addEventListener('click', (event) => {
+    const chip = event.target.closest('[data-clear-filter]');
+    if (!chip || !propertySearch)
+        return;
+    const key = chip.dataset.clearFilter;
+    if (key === 'saved') {
+        const params = new URLSearchParams(window.location.search);
+        params.delete('saved');
+        window.history.replaceState(null, '', `${window.location.pathname}${params.toString() ? `?${params}` : ''}`);
+    }
+    else if (key)
+        setFieldValue(key, chip.dataset.clearValue ?? 'all');
+    applyPropertyFilters(true);
+});
+document.querySelectorAll('.empty-reset').forEach((button) => button.addEventListener('click', () => {
+    if (!propertySearch)
+        return;
+    propertySearch.reset();
+    window.history.replaceState(null, '', window.location.pathname);
+    applyPropertyFilters(false);
+}));
 document.addEventListener('click', (event) => {
     const button = event.target.closest('.save-button');
     if (!button)
@@ -106,6 +258,13 @@ window.addEventListener('storage', (event) => {
         return;
     savedProperties = getSavedProperties();
     syncSavedProperties();
+    applyPropertyFilters(false);
+});
+window.addEventListener('popstate', () => {
+    if (!propertySearch)
+        return;
+    setFormFromFilterState(filterStateFromUrl());
+    applyPropertyFilters(false);
 });
 const propertyCollection = {
     'tmlse': {
@@ -406,6 +565,10 @@ function renderPropertyDetail() {
 }
 renderPropertyDetail();
 syncSavedProperties();
+if (propertySearch) {
+    setFormFromFilterState(filterStateFromUrl());
+    applyPropertyFilters(false);
+}
 const developmentPhases = {
     'site-feasibility': {
         phase: 'Site & feasibility', title: 'Start with the site.', sectionTitle: 'Clarity before commitment.',

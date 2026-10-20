@@ -440,7 +440,7 @@ textarea {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1.35fr 1fr 1fr 1fr .95fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: end;
   gap: 0;
   margin: 0 auto;
@@ -503,7 +503,8 @@ textarea {
   background: var(--white);
 }
 
-.property-search select {
+.property-search select,
+.property-search input {
   display: block;
   width: 100%;
   margin-top: 10px;
@@ -517,17 +518,53 @@ textarea {
   outline: none;
 }
 
+.property-search input::placeholder {
+  color: #6b7890;
+  opacity: 1;
+}
+
 .property-search select option {
   color: var(--ink);
 }
 
+.property-search input:focus-visible,
+.property-search select:focus-visible,
+.filter:focus-visible {
+  outline: 3px solid #2b76ff;
+  outline-offset: 3px;
+}
+
+.search-actions {
+  display: grid;
+  min-height: 102px;
+  grid-template-columns: 1fr;
+}
+
 .search-button {
   width: 100%;
-  min-height: 102px;
+  min-height: 64px;
   border-radius: 0;
   padding: 0 28px;
   font-size: 11px;
   letter-spacing: 0.14em;
+}
+
+.search-reset,
+.empty-reset {
+  border: 0;
+  background: #edf3fb;
+  color: var(--ink);
+  font: 700 9px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.search-reset:hover,
+.search-reset:focus-visible,
+.empty-reset:hover,
+.empty-reset:focus-visible {
+  background: #dceaff;
 }
 
 .search-summary {
@@ -541,6 +578,29 @@ textarea {
   text-transform: uppercase;
   background: #f8faff;
   border-top: 1px solid rgba(12, 33, 71, 0.08);
+}
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.filter-chip {
+  border: 1px solid rgba(161, 195, 244, 0.45);
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  font: 700 9px var(--mono);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.filter-chip:hover,
+.filter-chip:focus-visible {
+  background: rgba(255,255,255,0.2);
 }
 
 .intro,
@@ -824,6 +884,19 @@ textarea {
 .property-card.is-hidden {
   display: none;
 }
+
+.empty-state {
+  margin: 30px 0 0;
+  padding: 32px;
+  border: 1px solid rgba(161, 195, 244, 0.28);
+  background: rgba(255,255,255,0.07);
+  color: var(--white);
+  text-align: center;
+}
+
+.empty-state strong { font-size: 1.1rem; }
+.empty-state p { margin: 8px 0 18px; color: rgba(255,255,255,0.78); }
+.empty-reset { padding: 11px 15px; }
 
 .property-photo {
   position: relative;
@@ -1333,13 +1406,15 @@ textarea {
   }
 
   .search-intro,
-  .property-search label {
+  .property-search label,
+  .search-actions {
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
 
   .search-intro,
   .property-search label,
+  .search-actions,
   .search-button {
     min-height: 72px;
   }
