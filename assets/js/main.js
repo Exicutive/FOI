@@ -681,17 +681,26 @@ function preparePropertyEnquiry(form) {
         note.textContent = `Enquiry for: ${property.name}`;
         note.hidden = false;
     }
-    const interest = form.elements.namedItem('interest');
-    if (interest)
-        interest.value = 'Buying a property';
+    const subject = form.elements.namedItem('subject');
+    if (subject)
+        subject.value = 'Buying a property';
 }
 function contactFormValidationError(form) {
     const name = form.elements.namedItem('name');
     const email = form.elements.namedItem('email');
+    const subject = form.elements.namedItem('subject');
+    const preferredContactMethod = form.elements.namedItem('preferredContactMethod');
+    const message = form.elements.namedItem('message');
     if (!name || !name.value.trim())
         return name ? { field: name, message: 'Please enter your full name.' } : undefined;
     if (!email || !email.value.trim() || !email.validity.valid)
         return email ? { field: email, message: 'Please enter a valid email address.' } : undefined;
+    if (!subject || !subject.value)
+        return subject ? { field: subject, message: 'Please choose the service you need.' } : undefined;
+    if (!preferredContactMethod || !preferredContactMethod.value)
+        return preferredContactMethod ? { field: preferredContactMethod, message: 'Please choose how we should contact you.' } : undefined;
+    if (!message || !message.value.trim())
+        return message ? { field: message, message: 'Please tell us a little more about your enquiry.' } : undefined;
     return undefined;
 }
 if (enquiryForm) {
@@ -705,7 +714,6 @@ if (enquiryForm) {
         event.preventDefault();
         const message = enquiryForm.querySelector('.form-message');
         const submitButton = enquiryForm.querySelector('button[type="submit"]');
-        const endpoint = enquiryForm.dataset.crmEndpoint?.trim();
         if (submitButton?.disabled)
             return;
         const validationError = contactFormValidationError(enquiryForm);
@@ -714,34 +722,27 @@ if (enquiryForm) {
             validationError.field.focus();
             return;
         }
-        if (!endpoint) {
-            setFormMessage(message, 'The contact form is being set up. Please call or email us directly.', 'error');
-            return;
-        }
         const formData = new FormData(enquiryForm);
         const valueFor = (name) => String(formData.get(name) ?? '').trim();
         const payload = {
             name: valueFor('name'),
             email: valueFor('email'),
             phone: valueFor('phone'),
-            interest: valueFor('interest'),
+            subject: valueFor('subject'),
+            preferredContactMethod: valueFor('preferredContactMethod'),
             message: valueFor('message'),
-            website: valueFor('website'),
-            source: 'Website contact form',
-            page: `${window.location.origin}${window.location.pathname}`,
-            propertyId: enquiryForm.dataset.propertyId ?? '',
-            propertyName: enquiryForm.dataset.propertyName ?? '',
         };
         setFormMessage(message, 'Sending your message…', 'sending');
         if (submitButton)
             submitButton.disabled = true;
         try {
-            await fetch(endpoint, {
+            const response = await fetch('/api/contact', {
                 method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             });
+            if (!response.ok)
+                throw new Error('Contact submission failed.');
             setFormMessage(message, 'Thank you. Your message has been sent and a FOI advisor will be in touch shortly.', 'success');
             enquiryForm.reset();
         }

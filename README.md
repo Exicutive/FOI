@@ -1,6 +1,6 @@
 # FOI Developments
 
-Static multi-page website using HTML, CSS, and TypeScript. TypeScript compiles to browser-ready JavaScript in `assets/js/`.
+Multi-page website using HTML, CSS, TypeScript, and a small Node server. TypeScript compiles to browser-ready JavaScript in `assets/js/`; the server supplies the protected contact-form endpoint.
 
 ## Project structure
 
@@ -24,11 +24,11 @@ tsconfig.json
 
 ## Build
 
-Run `npm install` once, then `npm run build` whenever the TypeScript source changes. Serve the project root with a static web server to preview the pages.
+Run `npm install` once, then `npm run build:site` and `npm start` to preview the built site. The server requires Node 20+.
 
 ## Deploy to Render
 
-The included `render.yaml` configures a Render Static Site with clean routes such as `/about`, `/properties`, `/development`, and `/contact`. Push it to GitHub, then in Render choose **New + → Blueprint** and connect the `Exicutive/FOI` repository on `main`. Render will run `npm ci --include=dev && npm run build:site` and publish `dist/`.
+The included `render.yaml` configures a Render Node Web Service with clean routes such as `/about`, `/properties`, `/development`, and `/contact`. Push it to GitHub, then in Render choose **New + → Blueprint** and connect the `Exicutive/FOI` repository on `main`. Render will build the static files and run `server.js`. Before going live, set the two server-only environment variables in [`docs/google-sheets-crm-setup.md`](docs/google-sheets-crm-setup.md).
 
 ## Sitemap
 

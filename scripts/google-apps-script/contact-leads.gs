@@ -1,156 +1,173 @@
-const LEADS_SHEET_NAME = 'Website Leads';
-const LEAD_NOTIFICATION_EMAIL = 'info@foidevs.com';
-const RATE_LIMIT_WINDOW_SECONDS = 600;
-const MAX_LEADS_PER_WINDOW = 3;
+/**
+ * Configure these Script Properties before deploying this as a Web App:
+ *   GOOGLE_SHEET_ID, WEBHOOK_TOKEN, NOTIFICATION_EMAIL
+ */
+const LEADS_SHEET_NAME = 'Website contact submissions';
 const LEAD_HEADERS = [
   'Received at',
   'Name',
-  'Email',
   'Phone',
-  'Enquiry type',
+  'Email',
+  'Subject/Service',
+  'Preferred contact method',
   'Message',
-  'Source',
-  'Page',
-  'Status',
-  'Property reference',
-  'Property',
 ];
+const FIELD_LIMITS = {
+  name: 120,
+  phone: 60,
+  email: 160,
+  subject: 120,
+  preferredContactMethod: 30,
+  message: 2000,
+};
 
 function doGet() {
-  return response_({ ok: true, message: 'FOI lead endpoint is running.' });
-}
-
-function authorizeEmailNotifications() {
-  MailApp.getRemainingDailyQuota();
+  return jsonResponse_({ ok: true, message: 'Contact form endpoint is running.' });
 }
 
 function doPost(event) {
   try {
-    const lead = parseLead_(event);
+    const config = getConfig_();
+    const request = parseRequest_(event);
 
-    // Silent success for bots that fill the hidden field.
-    if (lead.website) return response_({ ok: true });
-    if (!lead.name || !isValidEmail_(lead.email)) return response_({ ok: false, error: 'A name and valid email are required.' });
-    if (isRateLimited_(lead)) return response_({ ok: false, error: 'Please wait a few minutes before sending another message.' });
+    if (!secureEquals_(request.webhookToken, config.webhookToken)) {
+      return jsonResponse_({ ok: false, error: 'Unauthorized request.' });
+    }
 
+    const submission = validateSubmission_(request);
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
-      const sheet = getLeadsSheet_();
+      const sheet = getLeadsSheet_(config.sheetId);
       sheet.appendRow([
         new Date(),
-        safeSheetValue_(lead.name),
-        safeSheetValue_(lead.email),
-        safeSheetValue_(lead.phone),
-        safeSheetValue_(lead.interest),
-        safeSheetValue_(lead.message),
-        safeSheetValue_(lead.source || 'Website contact form'),
-        safeSheetValue_(lead.page),
-        'New',
-        safeSheetValue_(lead.propertyId),
-        safeSheetValue_(lead.propertyName),
+        safeSheetValue_(submission.name),
+        safeSheetValue_(submission.phone),
+        safeSheetValue_(submission.email),
+        safeSheetValue_(submission.subject),
+        safeSheetValue_(submission.preferredContactMethod),
+        safeSheetValue_(submission.message),
       ]);
     } finally {
       lock.releaseLock();
     }
 
+    // The saved record is never rolled back if an email provider error occurs.
     try {
-      sendLeadNotification_(lead);
+      sendNotification_(submission, config.notificationEmail);
+      return jsonResponse_({ ok: true, notificationSent: true });
     } catch (error) {
-      Logger.log(`Lead was saved, but its email notification could not be sent: ${error}`);
+      console.log(`Submission saved, but notification email failed: ${error}`);
+      return jsonResponse_({ ok: true, notificationSent: false });
     }
-
-    return response_({ ok: true });
   } catch (error) {
-    return response_({ ok: false, error: 'Unable to save lead.' });
+    console.log(`Contact submission rejected: ${error}`);
+    return jsonResponse_({ ok: false, error: 'Unable to save the message.' });
   }
 }
 
-function sendLeadNotification_(lead) {
-  const details = [
-    `Name: ${lead.name}`,
-    `Email: ${lead.email}`,
-    `Phone: ${lead.phone || 'Not provided'}`,
-    `Enquiry type: ${lead.interest || 'Not provided'}`,
-    `Message: ${lead.message || 'Not provided'}`,
-    `Source: ${lead.source || 'Website contact form'}`,
-    `Page: ${lead.page || 'Not provided'}`,
-    `Property: ${lead.propertyName || 'Not provided'}`,
-    `Property reference: ${lead.propertyId || 'Not provided'}`,
-  ];
-
-  MailApp.sendEmail({
-    to: LEAD_NOTIFICATION_EMAIL,
-    subject: 'New website form submission',
-    body: `A new enquiry was submitted on the FOI Developments website.\n\n${details.join('\n')}`,
-  });
-}
-
-function getLeadsSheet_() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = spreadsheet.getSheetByName(LEADS_SHEET_NAME);
-
-  if (!sheet) sheet = spreadsheet.insertSheet(LEADS_SHEET_NAME);
-
-  const headerRange = sheet.getRange(1, 1, 1, LEAD_HEADERS.length);
-  const currentHeaders = headerRange.getValues()[0];
-  if (currentHeaders.some((header, index) => header !== LEAD_HEADERS[index])) {
-    headerRange.setValues([LEAD_HEADERS]);
-    sheet.setFrozenRows(1);
-    headerRange
-      .setFontWeight('bold')
-      .setBackground('#0c295a')
-      .setFontColor('#ffffff');
-    sheet.autoResizeColumns(1, LEAD_HEADERS.length);
+function getConfig_() {
+  const properties = PropertiesService.getScriptProperties();
+  const sheetId = properties.getProperty('GOOGLE_SHEET_ID');
+  const webhookToken = properties.getProperty('WEBHOOK_TOKEN');
+  const notificationEmail = properties.getProperty('NOTIFICATION_EMAIL');
+  if (!sheetId || !webhookToken || !notificationEmail) {
+    throw new Error('Required Script Properties have not been configured.');
   }
-
-  return sheet;
+  return { sheetId, webhookToken, notificationEmail };
 }
 
-function parseLead_(event) {
-  const raw = event && event.postData && event.postData.contents ? event.postData.contents : '{}';
-  const data = JSON.parse(raw);
-  return {
-    name: clean_(data.name, 120),
-    email: clean_(data.email, 160),
-    phone: clean_(data.phone, 60),
-    interest: clean_(data.interest, 120),
-    message: clean_(data.message, 2000),
-    source: clean_(data.source, 120),
-    page: clean_(data.page, 500),
-    website: clean_(data.website, 200),
-    propertyId: clean_(data.propertyId, 64),
-    propertyName: clean_(data.propertyName, 200),
+function parseRequest_(event) {
+  const raw = event && event.postData && event.postData.contents;
+  if (!raw) throw new Error('Request body is required.');
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (_) {
+    throw new Error('Request body must be JSON.');
+  }
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    throw new Error('Request body must be an object.');
+  }
+  return data;
+}
+
+function validateSubmission_(data) {
+  const submission = {
+    name: clean_(data.name, FIELD_LIMITS.name),
+    phone: clean_(data.phone, FIELD_LIMITS.phone),
+    email: clean_(data.email, FIELD_LIMITS.email),
+    subject: clean_(data.subject, FIELD_LIMITS.subject),
+    preferredContactMethod: clean_(data.preferredContactMethod, FIELD_LIMITS.preferredContactMethod),
+    message: clean_(data.message, FIELD_LIMITS.message),
   };
+
+  if (!submission.name || !submission.email || !submission.subject || !submission.preferredContactMethod || !submission.message) {
+    throw new Error('All required fields must be supplied.');
+  }
+  if (!isValidEmail_(submission.email)) throw new Error('Email address is invalid.');
+  if (!['Phone', 'Email', 'WhatsApp'].includes(submission.preferredContactMethod)) {
+    throw new Error('Preferred contact method is invalid.');
+  }
+  return submission;
 }
 
 function clean_(value, maxLength) {
-  return String(value || '').trim().slice(0, maxLength);
+  if (typeof value !== 'string') return '';
+  const trimmed = value.trim();
+  if (trimmed.length > maxLength) throw new Error('A field exceeds its allowed length.');
+  return trimmed;
 }
 
 function isValidEmail_(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function isRateLimited_(lead) {
-  const fingerprint = Utilities.computeDigest(
-    Utilities.DigestAlgorithm.SHA_256,
-    `${lead.email.toLowerCase()}|${lead.phone}`,
-  ).map((byte) => (byte + 256).toString(16).slice(-2)).join('');
-  const cache = CacheService.getScriptCache();
-  const cacheKey = `lead-rate:${fingerprint}`;
-  const attempts = Number(cache.get(cacheKey) || '0');
-  if (attempts >= MAX_LEADS_PER_WINDOW) return true;
-  cache.put(cacheKey, String(attempts + 1), RATE_LIMIT_WINDOW_SECONDS);
-  return false;
+function getLeadsSheet_(sheetId) {
+  const spreadsheet = SpreadsheetApp.openById(sheetId);
+  let sheet = spreadsheet.getSheetByName(LEADS_SHEET_NAME);
+  if (!sheet) sheet = spreadsheet.insertSheet(LEADS_SHEET_NAME);
+
+  if (sheet.getLastRow() === 0) {
+    const headerRange = sheet.getRange(1, 1, 1, LEAD_HEADERS.length);
+    headerRange.setValues([LEAD_HEADERS]);
+    sheet.setFrozenRows(1);
+    headerRange.setFontWeight('bold').setBackground('#0c295a').setFontColor('#ffffff');
+    sheet.autoResizeColumns(1, LEAD_HEADERS.length);
+  }
+  return sheet;
 }
 
 function safeSheetValue_(value) {
-  // Prevent spreadsheet formula execution from untrusted form input.
   return /^[=+\-@]/.test(value) ? `'${value}` : value;
 }
 
-function response_(payload) {
+function sendNotification_(submission, notificationEmail) {
+  const details = [
+    `Name: ${submission.name}`,
+    `Phone: ${submission.phone || 'Not provided'}`,
+    `Email: ${submission.email}`,
+    `Subject/Service: ${submission.subject}`,
+    `Preferred contact method: ${submission.preferredContactMethod}`,
+    `Message: ${submission.message}`,
+  ];
+  MailApp.sendEmail({
+    to: notificationEmail,
+    subject: 'New website contact submission',
+    body: `A new contact message was received.\n\n${details.join('\n')}`,
+  });
+}
+
+function secureEquals_(provided, expected) {
+  if (typeof provided !== 'string' || !provided || provided.length !== expected.length) return false;
+  let difference = 0;
+  for (let index = 0; index < expected.length; index += 1) {
+    difference |= provided.charCodeAt(index) ^ expected.charCodeAt(index);
+  }
+  return difference === 0;
+}
+
+function jsonResponse_(payload) {
   return ContentService
     .createTextOutput(JSON.stringify(payload))
     .setMimeType(ContentService.MimeType.JSON);

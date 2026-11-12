@@ -1,22 +1,38 @@
-# Google Sheets contact-lead setup
+# Google Sheets contact form setup
 
-The contact form saves each enquiry to Google Sheets through the Apps Script in `scripts/google-apps-script/contact-leads.gs`.
+The browser posts only to the website's same-origin `/api/contact` endpoint. That server forwards the request to Google Apps Script using environment variables, so the Apps Script URL and shared token never appear in browser code.
 
-The Apps Script also emails a plain-text alert to `info@foidevs.com` after saving each new lead. Change `LEAD_NOTIFICATION_EMAIL` in the script if alerts should go to a different inbox.
+## 1. Create the Sheet and Apps Script project
 
-1. Create a new Google Sheet named `FOI Website Leads`.
-2. In that sheet, select **Extensions → Apps Script**.
-3. Replace the default code with the contents of `scripts/google-apps-script/contact-leads.gs`, then save it.
-4. Run `authorizeEmailNotifications` from the Apps Script editor once and approve the requested email permission.
-5. Select **Deploy → New deployment**. Choose **Web app**, set **Execute as** to your Google account, and grant access to **Anyone**.
-6. Copy the deployment URL. In `pages/contact.html`, paste it inside `data-crm-endpoint=""` on the contact form.
-7. Rebuild and publish the website. Submit one test enquiry. A `Website Leads` sheet and its column headings are created automatically on the first successful submission, and an alert is sent to the configured inbox.
+1. Create a Google Sheet and copy its ID from the URL: `https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit`.
+2. Open **Extensions → Apps Script** from that Sheet.
+3. Replace the editor contents with [`scripts/google-apps-script/contact-leads.gs`](../scripts/google-apps-script/contact-leads.gs) and save.
+4. In **Project Settings → Script properties**, add these values:
 
-Keep the deployment URL in the form configuration only. It is safe for visitors to submit to it, but do not share edit access to the spreadsheet or Apps Script project.
+   | Property | Value |
+   | --- | --- |
+   | `GOOGLE_SHEET_ID` | The ID from step 1 |
+   | `WEBHOOK_TOKEN` | A new random, high-entropy secret |
+   | `NOTIFICATION_EMAIL` | The inbox that should receive submission alerts |
 
-## Production safety
+5. Deploy with **Deploy → New deployment → Web app**. Set **Execute as** to your Google account and **Who has access** to **Anyone**, authorize the requested Sheets and Mail permissions, then copy the `/exec` URL.
 
-- Keep the web-app access setting at **Anyone** only because the public website needs to submit leads. Do not grant anyone edit access to the Sheet or Apps Script project.
-- The script validates required fields, blocks spreadsheet formulas in lead content, and applies a short per-contact rate limit. Whenever this file changes, paste the updated code into Apps Script and create a **new version** through **Deploy → Manage deployments → Edit → New version → Deploy**.
-- The web-app URL is a public submission address, not a secret. Do not put account passwords, Google credentials, or any private key in the website or Apps Script code.
-- If this script is already deployed, publish its changes through **Deploy → Manage deployments → Edit → New version → Deploy**. Confirm that email permission is authorized by the account that owns the deployment. If a lead is saved but its notification fails, check the Apps Script execution log.
+The first valid submission creates the `Website contact submissions` tab and exactly these headers: `Received at`, `Name`, `Phone`, `Email`, `Subject/Service`, `Preferred contact method`, and `Message`.
+
+## 2. Configure Render
+
+This project is now a Node Web Service, not a Render Static Site. In Render's environment settings, add the following *server-only* secrets:
+
+| Variable | Value |
+| --- | --- |
+| `GOOGLE_SHEETS_WEB_APP_URL` | The Apps Script `/exec` URL from step 5 |
+| `GOOGLE_SHEETS_WEB_APP_TOKEN` | The exact `WEBHOOK_TOKEN` value from Script Properties |
+
+Do not use `NEXT_PUBLIC_`, put either value in HTML/JavaScript, or commit a real `.env` file. Redeploy after adding the values.
+
+## Behaviour and safety
+
+- Both the site server and Apps Script validate JSON, required fields, email format, allowed contact methods, and length limits.
+- The Apps Script serializes writes with `LockService` and escapes a leading `=`, `+`, `-`, or `@` before appending any user text to the sheet.
+- A row is appended before `MailApp.sendEmail` runs. A mail failure is logged but returns success, so visitors are not asked to resubmit a saved enquiry.
+- Keep the Sheet and Script private. Public access applies only to the Web App endpoint and is protected by the shared token.
