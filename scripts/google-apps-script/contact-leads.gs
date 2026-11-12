@@ -1,4 +1,5 @@
 const LEADS_SHEET_NAME = 'Website Leads';
+const LEAD_NOTIFICATION_EMAIL = 'info@foidevs.com';
 const RATE_LIMIT_WINDOW_SECONDS = 600;
 const MAX_LEADS_PER_WINDOW = 3;
 const LEAD_HEADERS = [
@@ -17,6 +18,10 @@ const LEAD_HEADERS = [
 
 function doGet() {
   return response_({ ok: true, message: 'FOI lead endpoint is running.' });
+}
+
+function authorizeEmailNotifications() {
+  MailApp.getRemainingDailyQuota();
 }
 
 function doPost(event) {
@@ -49,10 +54,36 @@ function doPost(event) {
       lock.releaseLock();
     }
 
+    try {
+      sendLeadNotification_(lead);
+    } catch (error) {
+      Logger.log(`Lead was saved, but its email notification could not be sent: ${error}`);
+    }
+
     return response_({ ok: true });
   } catch (error) {
     return response_({ ok: false, error: 'Unable to save lead.' });
   }
+}
+
+function sendLeadNotification_(lead) {
+  const details = [
+    `Name: ${lead.name}`,
+    `Email: ${lead.email}`,
+    `Phone: ${lead.phone || 'Not provided'}`,
+    `Enquiry type: ${lead.interest || 'Not provided'}`,
+    `Message: ${lead.message || 'Not provided'}`,
+    `Source: ${lead.source || 'Website contact form'}`,
+    `Page: ${lead.page || 'Not provided'}`,
+    `Property: ${lead.propertyName || 'Not provided'}`,
+    `Property reference: ${lead.propertyId || 'Not provided'}`,
+  ];
+
+  MailApp.sendEmail({
+    to: LEAD_NOTIFICATION_EMAIL,
+    subject: 'New website form submission',
+    body: `A new enquiry was submitted on the FOI Developments website.\n\n${details.join('\n')}`,
+  });
 }
 
 function getLeadsSheet_() {
