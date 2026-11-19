@@ -4,7 +4,10 @@ const { origin, organization, routes } = require('./seo-route-manifest');
 
 const projectRoot = path.resolve(__dirname, '..');
 const outputDirectory = path.join(projectRoot, 'dist');
-const publicEntries = ['index.html', 'assets', 'robots.txt'];
+// Files in this list are served from the site's root after deployment.
+// Keep the Google Search Console verification file here so Google can request
+// https://www.foidevs.com/google950538a02c8bda56.html directly.
+const publicEntries = ['index.html', 'assets', 'robots.txt', 'google950538a02c8bda56.html'];
 
 fs.rmSync(outputDirectory, { recursive: true, force: true });
 fs.mkdirSync(outputDirectory, { recursive: true });
